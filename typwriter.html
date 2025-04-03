@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dynamically Typed Text</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black; /* Set background to black */
+  }
+  #page-container {
+    width: 65%; /* Page width set to 65% */
+    border: 10px solid black; /* Black border around the page */
+    text-align: center;
+    padding: 20px; /* Optional: Add spacing inside the container */
+    background-color: black; /* Ensure the container blends with the page background */
+  }
+  #typed-text {
+    font-size: 40pt; /* Increased text size */
+    color: yellow; /* Set typed text color to yellow */
+  }
+  #typed-text span {
+    border-right: 0.15em solid yellow; /* Set caret to yellow */
+    animation: blink-caret 0.75s steps(4, start) infinite;
+  }
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: yellow; }
+  }
+</style>
+</head>
+<body>
+
+<div id="page-container">
+  <div id="typed-text"></div>
+</div>
+
+<script>
+function typeWriter(text, i, fnCallback) {
+  if (i < text.length) {
+    document.getElementById("typed-text").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+    setTimeout(function() {
+      typeWriter(text, i + 1, fnCallback);
+    }, 200); // Slower typing speed
+  } else if (typeof fnCallback === 'function') {
+    setTimeout(fnCallback, 700);
+  }
+}
+
+typeWriter("Now is the yime for Trump to pound sand or better yet dive off Niagra falls!", 0, function() {
+  console.log("Typing finished!");
+});
+</script>
+
+</body>
+</html>
