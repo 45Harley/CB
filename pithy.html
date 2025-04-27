@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resistance Quotes</title>
+    <style>
+        body {
+            background-color: black;
+            color: yellow;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #quoteContainer {
+            width: 40%;
+            border: 5px solid yellow;
+            padding: 20px;
+            font-size: 2rem;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: yellow;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="quoteContainer">Click the button to display a quote</div>
+    <button onclick="displayAnother()">Display Another</button>
+    <button onclick="exitPage()">Exit Page</button>
+
+    <script>
+        const quotes = [
+            "Courage begins where conformity ends.",
+            "Rise for justice, not for approval.",
+            "Question the path; shape the future.",
+            "Independent minds create lasting change.",
+            "Break the chains of obedience; forge the power of unity.",
+            "Challenge power—be the voice, not the echo.",
+            "Lead with purpose, not with blind faith.",
+            "True strength lies in standing apart, not falling in line.",
+            "Defy the tide; be the change.",
+            "Stand for truth, not tradition.",
+            "History is written by those who challenge power.",
+            "Freedom thrives where questioning begins.",
+            "Think critically, act courageously.",
+            "Silence feeds control; your voice breaks it.",
+            "Loyalty to justice outshines loyalty to leaders.",
+            "Rebellion is the seed of transformation.",
+            "Speak out against wrong; the world listens to courage.",
+            "Unite for progress, not for praise."
+        ];
+
+        function displayAnother() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quoteContainer").textContent = quotes[randomIndex];
+        }
+
+        function exitPage() {
+            window.close();
+        }
+    </script>
+</body>
+</html>
