@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completely Black Screen</title>
+  <style>
+    /* Body styling */
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw; /* Ensure full width of viewport */
+      background-color: black; /* Background is completely black */
+    }
+
+    /* Page container styling */
+    #page-container {
+      width: 65%; /* Page width set to 65% */
+      height: auto; /* Adjust height as needed */
+      border: 10px solid #FFD700; /* Off-yellow border */
+      box-sizing: border-box; /* Include border and padding in width/height calculations */
+      text-align: center;
+      padding: 20px; /* Spacing inside the container */
+      background-color: black; /* Ensure container matches page background */
+    }
+
+    /* Text styling */
+    #typed-text {
+      font-size: 30pt; /* Large font size */
+      color: yellow; /* Yellow text color */
+    }
+
+    #typed-text span {
+      border-right: 0.15em solid yellow; /* Yellow caret for typing effect */
+      animation: blink-caret 0.75s steps(4, start) infinite; /* Blinking caret */
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: yellow; }
+    }
+  </style>
+</head>
+<body>
+  <div id="page-container">
+    <div id="typed-text"></div>
+    <script>
+      /* Typewriter effect */
+      function typeWriter(text, i, fnCallback) {
+        if (i < text.length) {
+          document.getElementById("typed-text").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+          setTimeout(function() {
+            typeWriter(text, i + 1, fnCallback);
+          }, 100); // Typing speed
+        } else if (typeof fnCallback === 'function') {
+          setTimeout(fnCallback, 7000);
+        }
+      }
+
+      /* Start typewriter effect */
+      typeWriter("We all love to be loved. But - dont get it backwards, like Trump! He thinks everyone owes him love FIRST else his love is revenge and hate. He does not understand that love first (never hate) begets genuine love. He and MAGA and Putin need to wake up instead of warring with everyone. Love; ... to be loved!!", 0, function() {
+        console.log("Typing finished!");
+      });
+    </script>
+  </div>
+</body>
+</html>
