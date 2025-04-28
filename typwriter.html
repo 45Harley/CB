@@ -44,13 +44,20 @@ function typeWriter(text, i, fnCallback) {
     document.getElementById("typed-text").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
     setTimeout(function() {
       typeWriter(text, i + 1, fnCallback);
-    }, 100); // Slower typing speed
+    }, 200); // Slower typing speed
   } else if (typeof fnCallback === 'function') {
-    setTimeout(fnCallback, 7000);
+    setTimeout(fnCallback, 700);
   }
 }
 
-typeWriter("We all love to be loved.  But -  don’t get it backwards, like Trump !  He thinks everyone owes him love FIRST  else “his love” is revenge and hate. He does not understand that love first (never hate) begets genuine love. He and MAGA and Putin need to wake up instead of warring with everyone. Love; ... to be loved!!", 0, function() {
+typeWriter("   We all love to be loved. 
+But -  don’t get it backwards, like Trump !
+He thinks everyone owes him love FIRST  else his love is revenge and hate.
+He does not understand that love first (never hate) begets genuine love.
+He and MAGA and Putin need to wake up instead of warring with everyone. 
+Love;  to be loved!
+DUH !
+"), 0, function() {
   console.log("Typing finished!");
 });
 </script>
@@ -58,7 +65,7 @@ typeWriter("We all love to be loved.  But -  don’t get it backwards, like Trum
     <script>
         setTimeout(function() {
             window.close(); // Closes the tab or window
-        }, 75000); // 4000 milliseconds = 4 seconds
+        }, 20000); // 4000 milliseconds = 4 seconds
     </script>
 
 
