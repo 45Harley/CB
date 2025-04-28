@@ -3,23 +3,31 @@
 <head>
 <title>Advice for Donald (not Duck)</title>
 <style>
+<meta property="og:title" content="Love!...to be loved">
+<meta property="og:description" content="Love ">
+<meta property="og:image"
+content="https://45harley.github.io/CB/love.png">
+<meta property="og:url" content="https://45harley.github.io/CB/typwriter.html">
+<meta property="og:type" content="website">
+
+</head>
   body {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+   /*  height: 75vh;
     background-color: black; /* Set background to black */
   }
   #page-container {
     width: 65%; /* Page width set to 65% */
-    border: 10px solid black; /* Black border around the page */
+    border: 10px yellow; /* Black border around the page */
     text-align: center;
     padding: 20px; /* Optional: Add spacing inside the container */
     background-color: black; /* Ensure the container blends with the page background */
   }
   #typed-text {
-    font-size: 40pt; /* Increased text size */
+    font-size: 30pt; /* Increased text size */
     color: yellow; /* Set typed text color to yellow */
   }
   #typed-text span {
@@ -44,20 +52,13 @@ function typeWriter(text, i, fnCallback) {
     document.getElementById("typed-text").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
     setTimeout(function() {
       typeWriter(text, i + 1, fnCallback);
-    }, 200); // Slower typing speed
+    }, 100); // Slower typing speed
   } else if (typeof fnCallback === 'function') {
-    setTimeout(fnCallback, 700);
+    setTimeout(fnCallback, 7000);
   }
 }
 
-typeWriter("   We all love to be loved. 
-But -  don’t get it backwards, like Trump !
-He thinks everyone owes him love FIRST  else his love is revenge and hate.
-He does not understand that love first (never hate) begets genuine love.
-He and MAGA and Putin need to wake up instead of warring with everyone. 
-Love;  to be loved!
-DUH !
-"), 0, function() {
+typeWriter("We all love to be loved.  But -  don’t get it backwards, like Trump !  He thinks everyone owes him love FIRST  else “his love” is revenge and hate. He does not understand that love first (never hate) begets genuine love. He and MAGA and Putin need to wake up instead of warring with everyone. Love; ... to be loved!!", 0, function() {
   console.log("Typing finished!");
 });
 </script>
@@ -65,7 +66,7 @@ DUH !
     <script>
         setTimeout(function() {
             window.close(); // Closes the tab or window
-        }, 20000); // 4000 milliseconds = 4 seconds
+        }, 75000); // 4000 milliseconds = 4 seconds
     </script>
 
 
