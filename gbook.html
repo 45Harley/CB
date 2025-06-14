@@ -52,6 +52,16 @@
              margin-top: 30px;
         }
 
+        /* Blink animation for the 'Choose !' text */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .blink {
+            animation: blink 1s infinite; /* Apply the blink animation */
+        }
+
         #table-of-contents {
             margin-bottom: 20px; /* Reduced margin to bring content closer */
             padding: 20px;
@@ -123,8 +133,13 @@
 
     <div class="book-container">
         <h1>MIND:<br> Leading & Healing <br> the world.</h1>
-		<center><h3>"The time for thinkers has come."[1]<br>
-		Without an evil thought there would be no evil.
+		<center><h3>"The time for thinkers has come."[1]<br><br>
+		Without an evil thought there would be no evil.<br>
+		More evil produces more evil - war. <br><br>
+		without a good thought there would be no good."<br>
+		More good produces more good - harmony.<br>
+		<span class="blink">Choose !</span>
+		
 		</h3></center>
 		
         
