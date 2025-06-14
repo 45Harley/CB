@@ -11,14 +11,23 @@
             font-family: 'Georgia', serif;
             font-size: 1.2em; /* Larger font */
             line-height: 1.8;
+            padding: 20px; /* A small padding around the entire body */
+            display: flex; /* Use flexbox for robust centering of the book-container */
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Align to the top, allowing content to push down */
+            min-height: 100vh; /* Ensure body takes full viewport height for centering */
         }
 
         .book-container {
-            width: 65%;
-            margin: 40px auto;
-            padding: 40px;
+            width: 65%; /* Sets the width to 65% of the body's available width */
+            max-width: 900px; /* Optional: A maximum width to prevent it from getting too wide on very large screens */
+            margin: 40px 0; /* Vertical margin only, horizontal centering handled by flexbox on body */
+            padding: 40px; /* Padding inside the border, so content doesn't touch the edges */
             border: 4px solid #FFD700; /* Yellow page boundary */
             border-radius: 10px;
+            background-color: #1a1a1a; /* A darker shade to visually clarify the bounded area */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            flex-shrink: 0; /* Prevent the container from shrinking if there's not enough space */
         }
 
         h1, h2, h3 {
@@ -44,15 +53,18 @@
         }
 
         #table-of-contents {
-            margin-bottom: 50px;
+            margin-bottom: 20px; /* Reduced margin to bring content closer */
             padding: 20px;
             border: 1px solid #444;
             border-radius: 5px;
+            text-align: center; /* Center the "Table of Contents" heading */
         }
 
         #table-of-contents ul {
             list-style-type: none;
             padding: 0;
+            text-align: left; /* Align list items to the left within the TOC box */
+            display: inline-block; /* Helps center the ul block itself within a centered parent */
         }
 
         #table-of-contents li {
@@ -96,21 +108,26 @@
             border: 0;
             height: 1px;
             background-image: linear-gradient(to right, rgba(255, 215, 0, 0), rgba(255, 215, 0, 0.75), rgba(255, 215, 0, 0));
-            margin-top: 50px;
-            margin-bottom: 50px;
+            margin-top: 20px; /* Reduced margins for HR to maintain continuity */
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center; /* Center the footer content */
+            margin-top: 40px; /* Add some space above the footer */
+            padding-top: 20px; /* Padding for the footer content */
+            border-top: 1px solid #444; /* Optional: A line above the footer */
         }
     </style>
 </head>
 <body>
 
     <div class="book-container">
-        <h1>MIND:<br> Leading & Healing <br> the world.</h1><br>
-		<center><h3>"The time for thinkers has come." [1]</h3><br>
+        <h1>MIND:<br> Leading & Healing <br> the world.</h1>
+		<center><h3>"The time for thinkers has come."</h3></center>
 		
         
-        <!-- Table of Contents -->
         <div id="table-of-contents">
-            <h2>Table of Contents</h2></center>
+            <h2>Table of Contents</h2>
             <ul>
                 <li><a href="#chapter1">1. The Evolution of Human Economies</a></li>
                 <li><a href="#chapter2">2. The Role of the Service Economy</a></li>
@@ -130,7 +147,6 @@
         
         <hr>
 
-        <!-- Chapter 1 -->
         <div id="chapter1">
             <h2>1. The Evolution of Human Economies</h2>
             <p class="question">"In a broad historical way what are the different economies that humans have gone through?"</p>
@@ -142,7 +158,8 @@
                 <li><strong>Feudal Economy:</strong> During the Middle Ages (roughly 500–1500 CE), feudalism structured economies around landownership. Lords controlled land, while serfs worked it in exchange for protection and subsistence.</li>
                 <li><strong>Mercantilism:</strong> From the 16th to 18th centuries, European powers focused on accumulating wealth through trade, colonial expansion, and government-controlled commerce. Gold and silver were prized as measures of national strength.</li>
                 <li><strong>Industrial Capitalism:</strong> The Industrial Revolution (18th–19th centuries) led to mass production, urbanization, and wage labor. Factory-based economies replaced agrarian models, fueling rapid technological progress.</li>
-                <li><strong>Laissez-Faire Capitalism:</strong> In the 19th century, minimal government interference allowed businesses to thrive, but also led to inequality, monopolies, and worker exploitation.</li>
+                <li><strong>Laissez-Faire Capitalism:
+                </strong> In the 19th century, minimal government interference allowed businesses to thrive, but also led to inequality, monopolies, and worker exploitation.</li>
                 <li><strong>Mixed Economies & Welfare Capitalism:</strong> In the 20th century, many nations blended capitalist and socialist policies, introducing social safety nets while maintaining market-driven innovation.</li>
                 <li><strong>Globalized Digital Economy:</strong> Today, globalization, automation, and AI are reshaping economies. Cryptocurrency, decentralized finance, and AI-driven governance models are pushing boundaries.</li>
             </ul>
@@ -150,7 +167,6 @@
 
         <hr>
         
-        <!-- Chapter 2 -->
         <div id="chapter2">
             <h2>2. The Role of the Service Economy</h2>
             <p class="question">"Where does services fit?"</p>
@@ -166,7 +182,6 @@
         
         <hr>
 
-        <!-- Chapter 3 -->
         <div id="chapter3">
             <h2>3. The Stages of Theology, Society, and Culture</h2>
             <p class="question">"Now let's do the same for stages of theology / social / cultures."</p>
@@ -199,7 +214,6 @@
         
         <hr>
 
-        <!-- Chapter 4 -->
         <div id="chapter4">
             <h2>4. The Evolution of the Sciences</h2>
             <p class="question">"Do the same thing for the sciences."</p>
@@ -216,7 +230,6 @@
         
         <hr>
 
-        <!-- Chapter 5 -->
         <div id="chapter5">
             <h2>5. The Strongest Cause for Transformation</h2>
             <p class="question">"Now, what made all this happen? What is the strongest cause for all this?"</p>
@@ -234,7 +247,6 @@
         
         <hr>
 
-        <!-- Chapter 6 -->
         <div id="chapter6">
             <h2>6. The Evolution of Mind, Consciousness, and Identity</h2>
             <p class="question">"What about mind, consciousness, identity?"</p>
@@ -267,7 +279,6 @@
         
         <hr>
 
-        <!-- Chapter 7 -->
         <div id="chapter7">
             <h2>7. The Primacy of Mind and Ideas</h2>
             <p class="question">"Actually mind and its ideas is the leading maybe the sole factor isn't it?"</p>
@@ -278,7 +289,6 @@
         
         <hr>
 
-        <!-- Chapter 8 -->
         <div id="chapter8">
             <h2>8. Reality as a Construct of Mind</h2>
             <p class="question">"Without mind and ideas there is no reality. Therefore...."</p>
@@ -288,7 +298,6 @@
         
         <hr>
 
-        <!-- Chapter 9 -->
         <div id="chapter9">
             <h2>9. The Power of Collective Ideas</h2>
             <p class="question">"Collective ideas... not singular, except as infinity / unified.."</p>
@@ -298,7 +307,6 @@
         
         <hr>
 
-        <!-- Chapter 10 -->
         <div id="chapter10">
             <h2>10. Collective Elevation Through New Education</h2>
             <p class="question">"Collective elevation. As we rise the world benefits. Full scale education, but not in the old ways."</p>
@@ -313,7 +321,6 @@
         
         <hr>
 
-        <!-- Chapter 11 -->
         <div id="chapter11">
             <h2>11. Progress as a Result of Mind</h2>
             <p class="question">"Now it even more evident that progress results from mind and ideas."</p>
@@ -323,7 +330,6 @@
         
         <hr>
 
-        <!-- Chapter 12 -->
         <div id="chapter12">
             <h2>12. Manifesting an Ethical Reality</h2>
             <p class="question">"Leading collective human thought down the path we just took, with all those mental idea-qualities - engaging people to iteratively manifest more and more ethical reality."</p>
@@ -339,7 +345,6 @@
         
         <hr>
 
-        <!-- Chapter 13 -->
         <div id="chapter13">
             <h2>13. The Receptive Audience for Transformation</h2>
             <p class="question">"What and who understands all this? Who would be receptive to these ideas? 'Don't cast your pearls before swine' - the unethical. Realization is progress IS healing - is willing transformative."</p>
@@ -355,14 +360,10 @@
             <p class="answer">Not everyone will grasp the depth of these ideas. Those who cling to power, avoid self-reflection, or reject growth actively resist transformation. That’s why engagement must be intentional—finding those who are willing, capable, and ready to iterate toward ethical reality.</p>
         </div>
 
+        <footer>
+            <br>
+            <a href="https://www.marybakereddylibrary.org/" target="_blank">1. Mary Baker Eddy</a>
+        </footer>
     </div>
-
 </body>
-<footer>
-<center><br>
-    <a href="https://www.marybakereddylibrary.org/" target="_blank">1. Mary Baker Eddy</a></hr3></center>
-
-1. Mary Baker Eddy</hr3></center>
-
-</ffooter>
 </html>
