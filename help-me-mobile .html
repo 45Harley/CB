@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Reference - Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .mobile-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        .mobile-header {
+            background: #2a2a2a;
+            padding: 16px 20px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-header h1 {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            background: #3a3a3a;
+            border: none;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Navigation Drawer */
+        .nav-drawer {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            background: #2a2a2a;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .nav-drawer.open {
+            left: 0;
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .nav-overlay.open {
+            display: block;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #404040;
+        }
+
+        .nav-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-section h3 {
+            color: #ffffff;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            margin: 4px 0;
+            background: #3a3a3a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #4a4a4a;
+            border-left-color: #6366f1;
+        }
+
+        .special-nav-item {
+            border-left-color: #f59e0b;
+        }
+
+        .special-nav-item:hover, .special-nav-item.active {
+            border-left-color: #f59e0b;
+        }
+
+        /* Main Content */
+        .mobile-main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #1e1e1e;
+        }
+
+        .mobile-main h2 {
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+
+        .mobile-subtitle {
+            color: #9ca3af;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        /* Mobile Attributes Layout */
+        .mobile-attributes {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .mobile-attributes-column {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #404040;
+        }
+
+        .mobile-attributes-column h3 {
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .positive h3::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .negative h3::before {
+            content: "✗";
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .mobile-attribute-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .mobile-attribute-item {
+            padding: 10px 12px;
+            background: #1a1a1a;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .positive .mobile-attribute-item:active {
+            background: #065f46;
+            border-color: #10b981;
+        }
+
+        .negative .mobile-attribute-item:active {
+            background: #7f1d1d;
+            border-color: #ef4444;
+        }
+
+        /* Bottom Sheet for Definitions */
+        .definition-sheet {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: #2a2a2a;
+            border-top: 1px solid #404040;
+            border-radius: 16px 16px 0 0;
+            transition: bottom 0.3s ease;
+            z-index: 1001;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .definition-sheet.open {
+            bottom: 0;
+        }
+
+        .definition-handle {
+            width: 40px;
+            height: 4px;
+            background: #6b7280;
+            border-radius: 2px;
+            margin: 12px auto 20px auto;
+        }
+
+        .definition-content {
+            padding: 0 20px 30px 20px;
+        }
+
+        .definition-word {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #6366f1;
+            margin-bottom: 12px;
+        }
+
+        .definition-text {
+            line-height: 1.6;
+            color: #d1d5db;
+            font-size: 1rem;
+        }
+
+        .close-definition {
+            background: #3a3a3a;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+
+        /* Welcome State */
+        .welcome-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9ca3af;
+        }
+
+        .welcome-state h2 {
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        /* Special Sections Mobile Layout */
+        .special-mobile-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .special-mobile-column {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #404040;
+        }
+
+        .degree-1 {
+            border-left: 4px solid #ef4444;
+        }
+
+        .degree-2 {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .degree-3 {
+            border-left: 4px solid #10b981;
+        }
+
+        .path-material {
+            border-left: 4px solid #6b7280;
+        }
+
+        .path-awakening {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .path-spiritual {
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Header -->
+        <div class="mobile-header">
+            <h1>Consciousness Reference</h1>
+            <button class="menu-toggle" onclick="toggleNav()">Menu</button>
+        </div>
+
+        <!-- Navigation Drawer -->
+        <div class="nav-overlay" onclick="closeNav()"></div>
+        <div class="nav-drawer">
+            <div class="nav-header">
+                <h2 style="color: #ffffff; font-size: 1.2rem;">Navigation</h2>
+                <button class="nav-close" onclick="closeNav()">&times;</button>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Synonyms for God</h3>
+                <div class="nav-item" onclick="loadMobileSynonym('Principle')">Principle</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Mind')">Mind</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Soul')">Soul</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Spirit')">Spirit</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Life')">Life</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Truth')">Truth</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Love')">Love</div>
+                <div class="nav-item" onclick="loadMobileSynonym('Moral')">Moral</div>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Special Analysis</h3>
+                <div class="nav-item special-nav-item" onclick="loadMobileSpecial('DegreeAnalysis')">Three-Degree Analysis</div>
+                <div class="nav-item special-nav-item" onclick="loadMobileSpecial('PathAllegory')">Path Allegory</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="mobile-main" id="mobileMain">
+            <div class="welcome-state">
+                <h2>Consciousness Reference Tool</h2>
+                <p>Tap the Menu button to explore synonyms and their attributes.</p>
+                <p style="margin-top: 16px; font-size: 0.9rem;">Tap any attribute to see its definition.</p>
+            </div>
+        </div>
+
+        <!-- Definition Bottom Sheet -->
+        <div class="definition-sheet" id="definitionSheet">
+            <div class="definition-handle"></div>
+            <div class="definition-content" id="definitionContent">
+                <!-- Definition content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Embedded synonyms data (same as desktop version)
+        const synonymsData = {
+            "Principle": {
+                "positive": ["efficiency", "endlessness", "enforcement", "equality", "eternity", "ethics", "excellence", "fairness", "fatherhood", "fixedness", "force", "foundation", "fulfillment", "government", "growth", "guidance", "justice", "law", "operation", "order", "organization", "permanency", "progress", "promptness", "punctuality", "regularity", "regulation", "reliability", "salvation", "security", "stability", "steadfastness", "structure", "that which is absolute", "that which is unwavering", "trustworthiness", "unchangeableness"],
+                "negative": ["inefficiency", "temporariness", "negligence", "inequality", "mortality", "corruption", "mediocrity", "injustice", "abandonment", "instability", "weakness", "destruction", "emptiness", "anarchy", "stagnation", "confusion", "lawlessness", "chaos", "dysfunction", "disorder", "disorganization", "transience", "regression", "delay", "tardiness", "irregularity", "deregulation", "unreliability", "condemnation", "vulnerability", "instability", "fickleness", "collapse", "relativity", "wavering", "betrayal", "mutability"]
+            },
+            "Mind": {
+                "positive": ["adherence", "alertness", "application", "attention", "awareness", "carefulness", "clarity", "comprehension", "concentration", "consciousness", "contemplation", "dedication", "determination", "devotion", "discipline", "discrimination", "discernment", "efficiency", "focus", "foresight", "insight", "intelligence", "motivation", "precision", "reason", "reflection", "resilience", "resolve", "steadfastness", "substance", "thoroughness", "understanding", "wisdom", "human consciousness", "moral obligation", "dormant sense", "spiritual sense", "active faculty", "true idea of good", "awakened understanding", "moral courage"],
+                "negative": ["abandonment", "dullness", "negligence", "inattention", "ignorance", "carelessness", "confusion", "misunderstanding", "distraction", "unconsciousness", "impulsiveness", "indifference", "hesitation", "betrayal", "chaos", "prejudice", "blindness", "inefficiency", "scattered", "shortsightedness", "delusion", "stupidity", "discouragement", "imprecision", "irrationality", "thoughtlessness", "fragility", "indecision", "fickleness", "emptiness", "superficiality", "misunderstanding", "foolishness"]
+            },
+            "Soul": {
+                "positive": ["appreciation", "empathy", "enthusiasm", "freedom", "gratitude", "lightheartedness", "perseverance", "positiveness", "steadfastness", "substance", "thoroughness", "unfoldment", "unity", "willingness", "zest"],
+                "negative": ["indifference", "apathy", "depression", "bondage", "ingratitude", "heaviness", "surrender", "negativity", "fickleness", "emptiness", "superficiality", "stagnation", "division", "resistance", "lifelessness"]
+            },
+            "Spirit": {
+                "positive": ["appreciation", "atmosphere", "carefulness", "consciousness", "conscientiousness", "diligence", "dominion", "eagerness", "effervescence", "efficiency", "effortlessness", "empathy", "endurance", "energy", "enthusiasm", "exhilaration", "exuberance", "freedom", "goodness", "gratitude", "gusto", "illumination", "incorporeality", "independence", "inspiration", "interest", "intuition", "liberty", "lightheartedness", "mightiness", "naturalness", "omnipotence", "omnipresence", "oneness", "openness", "permanency", "perseverance", "positiveness", "power", "presence", "radiance", "renewal", "resolve", "resourcefulness", "satisfaction", "solidarity", "spirituality", "spontaneity", "spunk"],
+                "negative": ["indifference", "toxicity", "carelessness", "unconsciousness", "negligence", "laziness", "subjugation", "apathy", "flatness", "inefficiency", "struggle", "coldness", "weakness", "lethargy", "depression", "exhaustion", "dullness", "oppression", "evil", "ingratitude", "blandness", "darkness", "materialism", "dependence", "discouragement", "boredom", "rigidity", "captivity", "heaviness", "powerlessness", "artificiality", "limitation", "absence", "separation", "closedness", "transience", "surrender", "negativity", "impotence", "absence", "dullness", "stagnation", "indecision", "inadequacy", "dissatisfaction", "division", "materialism", "rigidity", "cowardice"]
+            },
+            "Life": {
+                "positive": ["abundance", "activity", "adaptation", "adventure", "animation", "balance", "beauty", "birth", "breath", "change", "circulation", "creation", "development", "dynamism", "energy", "evolution", "existence", "expansion", "experience", "expression", "flow", "generation", "growth", "harmony", "health", "immortality", "improvement", "increase", "integration", "manifestation", "maturation", "movement", "nourishment", "progression", "prosperity", "pulsation", "regeneration", "renewal", "restoration", "rhythm", "strength", "sustenance", "transformation", "unity", "vitality", "wholeness"],
+                "negative": ["scarcity", "inactivity", "rigidity", "monotony", "lifelessness", "imbalance", "ugliness", "death", "suffocation", "stagnation", "blockage", "destruction", "decay", "inertia", "exhaustion", "regression", "nonexistence", "contraction", "suffering", "suppression", "stagnation", "sterility", "deterioration", "discord", "disease", "mortality", "decline", "decrease", "fragmentation", "concealment", "immaturity", "stillness", "starvation", "regression", "poverty", "arrhythmia", "degeneration", "deterioration", "destruction", "disruption", "weakness", "deprivation", "stagnation", "division", "lethargy", "brokenness"]
+            },
+            "Truth": {
+                "positive": ["accuracy", "authenticity", "certainty", "clarity", "correctness", "credibility", "dependability", "exactness", "fact", "faithfulness", "genuineness", "honesty", "integrity", "precision", "reality", "reliability", "sincerity", "trustworthiness", "validity", "veracity", "verity"],
+                "negative": ["inaccuracy", "falseness", "uncertainty", "confusion", "incorrectness", "incredibility", "unreliability", "approximation", "fiction", "betrayal", "artificiality", "dishonesty", "corruption", "imprecision", "illusion", "unreliability", "insincerity", "untrustworthiness", "invalidity", "falsehood", "untruth"]
+            },
+            "Love": {
+                "positive": ["acceptance", "affection", "appreciation", "care", "compassion", "devotion", "empathy", "forgiveness", "generosity", "grace", "gratitude", "harmony", "kindness", "mercy", "nurturing", "patience", "peace", "service", "sympathy", "tenderness", "understanding", "unity"],
+                "negative": ["rejection", "hatred", "indifference", "neglect", "cruelty", "abandonment", "coldness", "resentment", "selfishness", "harshness", "ingratitude", "discord", "meanness", "ruthlessness", "abuse", "impatience", "conflict", "selfishness", "insensitivity", "hardness", "misunderstanding", "division"]
+            },
+            "Moral": {
+                "positive": ["character", "conscience", "duty", "ethics", "goodness", "honor", "integrity", "morality", "principles", "rectitude", "responsibility", "righteousness", "uprightness", "virtue", "worthiness", "moral courage", "spiritual understanding", "divine nature", "true idea of good", "moral obligation", "spiritual sense", "grandeur and bliss", "reformed consciousness", "awakened sense"],
+                "negative": ["corruption", "callousness", "negligence", "immorality", "evil", "dishonor", "deceit", "amorality", "unprincipled", "wickedness", "irresponsibility", "unrighteousness", "depravity", "vice", "unworthiness", "animal courage", "material means", "corporeal sense", "fear of punishment", "dormant conscience", "material pursuits", "human sense pleasures", "unreformed nature"]
+            },
+            "DegreeAnalysis": {
+                "first_degree_depravity": ["evil beliefs", "passions", "appetites", "fear", "depraved will", "self-justification", "pride", "envy", "deceit", "hatred", "revenge", "sin", "sickness", "disease", "death"],
+                "second_degree_moral": ["humanity", "honesty", "affection", "compassion", "hope", "faith", "meekness", "temperance"],
+                "third_degree_spiritual": ["wisdom", "purity", "spiritual understanding", "spiritual power", "love", "health", "holiness", "God's image", "divinity", "all-inclusive", "celestial city", "sacred summit", "living fountains", "spiritual riches", "Father's house", "heavenly messenger", "good part", "mountain-horn", "path upward"]
+            },
+            "PathAllegory": {
+                "valley_awakening": ["patient toilers", "watchers and workers", "few laborers", "ascending life climb", "rough cliffs", "living fountains", "cool grottos", "straight and narrow path"],
+                "city_dwelling_material": ["palatial dwelling", "sounds of festivity", "gorgeously tapestried parlors", "dancing-halls", "banquet-rooms", "adulterers", "fornicators", "idolaters", "drunkenness", "appetites and passions", "house of clay", "heavy baggage", "worldly policy"],
+                "spiritual_ascent": ["celestial city", "sacred summit", "serene azure", "unfathomable glory", "mountain summit", "washing feet", "chosen good part", "losing life to find it", "mountain-horn calling", "graciously meeting each citizen"]
+            }
+        };
+
+        // Comprehensive dictionary definitions
+        const definitions = {
+            // Principle attributes
+            "efficiency": "The ability to accomplish something with the least waste of time and effort; competency in performance.",
+            "endlessness": "The quality of having no end; being infinite or eternal in duration.",
+            "enforcement": "The process of compelling observance of or compliance with laws, rules, or obligations.",
+            "equality": "The state of being equal, especially in status, rights, and opportunities.",
+            "eternity": "Infinite or unending time; a timeless state.",
+            "ethics": "Moral principles that govern behavior or the conducting of an activity.",
+            "excellence": "The quality of being outstanding or extremely good.",
+            "fairness": "Impartial and just treatment or behavior without favoritism or discrimination.",
+            "fatherhood": "The state of being a father; paternal care and guidance.",
+            "fixedness": "The quality of being firmly established and unchangeable.",
+            "force": "Strength or energy as an attribute of physical action or movement; power.",
+            "foundation": "An underlying basis or principle for something; a fundamental structure.",
+            "fulfillment": "The achievement of something desired, promised, or predicted; satisfaction.",
+            "government": "The system by which a state or community is governed; authority and control.",
+            "growth": "The process of increasing in size, number, value, or strength.",
+            "guidance": "Advice or information aimed at resolving a problem or difficulty.",
+            "justice": "Fair treatment and the administration of what is deserved.",
+            "law": "A system of rules recognized and enforced by a governing authority.",
+            "operation": "The action of functioning or the fact of being active or in effect.",
+            "order": "Arrangement or disposition of things in relation to each other according to rule or sequence.",
+            "organization": "An organized structure for arranging or coordinating activities.",
+            "permanency": "The state or quality of lasting or remaining unchanged indefinitely.",
+            "progress": "Forward movement toward a destination or goal; advancement.",
+            "promptness": "The quality of being done without delay; punctuality.",
+            "punctuality": "The quality of being on time; adherence to appointed times.",
+            "regularity": "The quality of being regular; conformity to a standard pattern.",
+            "regulation": "A rule or directive made and maintained by an authority.",
+            "reliability": "The quality of being trustworthy or performing consistently well.",
+            "salvation": "Deliverance from sin and its consequences; preservation from harm.",
+            "security": "The state of being free from danger, threat, or loss.",
+            "stability": "The quality of being stable; resistance to change or deterioration.",
+            "steadfastness": "Resolutely or dutifully firm and unwavering in purpose.",
+            "structure": "The arrangement of parts or elements in something complex.",
+            "that which is absolute": "That which is perfect, complete, and unrestricted.",
+            "that which is unwavering": "That which remains constant and does not fluctuate.",
+            "trustworthiness": "The quality of being reliable and honest; deserving of trust.",
+            "unchangeableness": "The quality of remaining the same; immutability.",
+
+            // Mind attributes
+            "adherence": "Attachment or commitment to a person, cause, or belief.",
+            "alertness": "The quality of being watchful and prompt to meet danger or emergency.",
+            "application": "The action of putting something into operation; diligent effort.",
+            "attention": "Notice taken of someone or something; the regarding of someone as interesting.",
+            "awareness": "Knowledge or perception of a situation or fact.",
+            "carefulness": "The quality of giving thought to avoiding danger and mistakes.",
+            "clarity": "The quality of being clear, pure, and easily understood.",
+            "comprehension": "The action or capability of understanding something.",
+            "concentration": "The action of focusing one's attention or mental effort on something.",
+            "consciousness": "The state of being aware of and able to think about one's existence, sensations, thoughts.",
+            "contemplation": "The action of looking thoughtfully at something for a long time.",
+            "dedication": "The quality of being committed to a task or purpose.",
+            "determination": "Firmness of purpose; resoluteness.",
+            "devotion": "Love, loyalty, or enthusiasm for a person, activity, or cause.",
+            "discipline": "The practice of training people to obey rules and follow a code of behavior.",
+            "discrimination": "Recognition of the difference between one thing and another; good judgment.",
+            "discernment": "The ability to judge well; keen insight and good judgment.",
+            "focus": "The center of interest or activity; concentrated attention.",
+            "foresight": "The ability to predict or plan for the future.",
+            "insight": "An accurate and deep understanding; the capacity to gain understanding.",
+            "intelligence": "The ability to acquire and apply knowledge and skills.",
+            "motivation": "The reason for acting or behaving in a particular way; enthusiasm.",
+            "precision": "The quality of being exact and accurate.",
+            "reason": "The power of the mind to think, understand, and form judgments logically.",
+            "reflection": "Serious thought or consideration; contemplation.",
+            "resilience": "The capacity to recover quickly from difficulties; toughness.",
+            "resolve": "Firm determination to do something.",
+            "substance": "The real physical matter of which a thing consists; essential nature.",
+            "thoroughness": "The quality of being extremely attentive to accuracy and detail.",
+            "understanding": "The ability to comprehend; insight and empathy toward others.",
+            "wisdom": "The quality of having experience, knowledge, and good judgment.",
+            "human consciousness": "The state of human awareness and mental activity.",
+            "moral obligation": "A duty based on ethics and right conduct.",
+            "dormant sense": "Inactive or sleeping awareness that needs awakening.",
+            "spiritual sense": "Perception through divine understanding rather than material senses.",
+            "active faculty": "A functioning capacity or power of the mind.",
+            "true idea of good": "An accurate understanding of what is genuinely beneficial.",
+            "awakened understanding": "Enlightened comprehension that has been roused to activity.",
+            "moral courage": "The courage to do what is right despite opposition or hardship.",
+
+            // Soul attributes
+            "appreciation": "Recognition of the full worth of something; gratitude.",
+            "empathy": "The ability to understand and share the feelings of another.",
+            "enthusiasm": "Intense and eager enjoyment, interest, or approval.",
+            "freedom": "The power or right to act, speak, or think as one wants.",
+            "gratitude": "The quality of being thankful; readiness to show appreciation.",
+            "lightheartedness": "The quality of being cheerful and carefree.",
+            "perseverance": "Persistence in doing something despite difficulty or delay.",
+            "positiveness": "The quality of being constructive, optimistic, or confident.",
+            "steadfastness": "Resolutely or dutifully firm and unwavering in purpose.",
+            "substance": "The real physical matter of which a thing consists; essential nature.",
+            "thoroughness": "The quality of being extremely attentive to accuracy and detail.",
+            "unfoldment": "The process of revealing or developing; gradual disclosure.",
+            "unity": "The state of being united or joined as a whole; harmony.",
+            "willingness": "The quality of being ready, eager, or prepared to do something.",
+            "zest": "Great enthusiasm and energy; gusto.",
+
+            // Spirit attributes
+            "atmosphere": "The pervading tone or mood of a place, situation, or work of art.",
+            "conscientiousness": "The quality of wishing to do what is right; diligence.",
+            "diligence": "Careful and persistent work or effort.",
+            "dominion": "Sovereignty; control; the power to rule over.",
+            "eagerness": "Enthusiasm to do or have something; keenness.",
+            "effervescence": "Vivacity and enthusiasm; bubbling excitement.",
+            "effortlessness": "The quality of requiring no physical or mental exertion.",
+            "endurance": "The fact or power of enduring an unpleasant process.",
+            "energy": "The strength and vitality required for sustained physical or mental activity.",
+            "exhilaration": "A feeling of excitement, happiness, or elation.",
+            "exuberance": "The quality of being full of energy, excitement, and cheerfulness.",
+            "goodness": "The quality of being morally good or virtuous.",
+            "gusto": "Enjoyment and enthusiasm in doing something.",
+            "illumination": "Lighting or light; spiritual or intellectual enlightenment.",
+            "incorporeality": "The quality of not having a physical body; spirituality.",
+            "independence": "The fact or state of being independent; freedom from control.",
+            "inspiration": "The process of being mentally stimulated to do or feel something creative.",
+            "interest": "The feeling of wanting to know or learn about something.",
+            "intuition": "The ability to understand something immediately, without conscious reasoning.",
+            "liberty": "The state of being free within society from oppressive restrictions.",
+            "mightiness": "Great and impressive power or strength; majesty.",
+            "naturalness": "The quality of being natural; freedom from artificiality.",
+            "omnipotence": "The quality of having unlimited or very great power.",
+            "omnipresence": "The quality of being present everywhere at the same time.",
+            "oneness": "The fact or state of being unified or whole; unity.",
+            "openness": "Lack of restriction; accessibility; frankness.",
+            "permanency": "The state or quality of lasting or remaining unchanged indefinitely.",
+            "positiveness": "The quality of being constructive, optimistic, or confident.",
+            "power": "The ability to do something or act in a particular way.",
+            "presence": "The state or fact of existing, occurring, or being present.",
+            "radiance": "Light or heat as emitted or reflected; bright happiness or beauty.",
+            "renewal": "The action of extending the period of validity; revival.",
+            "resourcefulness": "The ability to find quick and clever ways to overcome difficulties.",
+            "satisfaction": "Fulfillment of one's wishes, expectations, or needs.",
+            "solidarity": "Unity or agreement of feeling or action among individuals.",
+            "spirituality": "The quality of being concerned with the human spirit or soul.",
+            "spontaneity": "The quality of being spontaneous; naturalness.",
+            "spunk": "Courage and determination; spirit.",
+
+            // Life attributes
+            "abundance": "A very large quantity of something; plentifulness.",
+            "activity": "The condition of being active; energetic action.",
+            "adaptation": "The action of adapting or being adapted; adjustment.",
+            "adventure": "An unusual and exciting, typically hazardous, experience or activity.",
+            "animation": "The state of being full of life or vigor; liveliness.",
+            "balance": "An even distribution of weight; mental steadiness.",
+            "beauty": "A combination of qualities that pleases the aesthetic senses.",
+            "birth": "The emergence of a baby or young from the body of its mother; origin.",
+            "breath": "The air taken into or expelled from the lungs; life.",
+            "change": "The action of becoming different; transformation.",
+            "circulation": "Movement to and fro or around something; flow.",
+            "creation": "The action of bringing something into existence.",
+            "development": "The process of developing or being developed; growth.",
+            "dynamism": "The quality of being characterized by vigorous activity and progress.",
+            "evolution": "The gradual development of something; change over time.",
+            "existence": "The fact or state of living or having objective reality.",
+            "expansion": "The action of becoming larger or more extensive.",
+            "experience": "Practical contact with and observation of facts or events.",
+            "expression": "The process of making known one's thoughts or feelings.",
+            "flow": "The action of moving along in a steady, continuous stream.",
+            "generation": "The action of producing or creating something.",
+            "health": "The state of being free from illness or injury.",
+            "immortality": "The ability to live forever; eternal life.",
+            "improvement": "The action of making or becoming better.",
+            "increase": "A rise in the size, amount, or degree of something.",
+            "integration": "The action of combining or coordinating separate elements.",
+            "manifestation": "An event, action, or object that clearly shows a quality.",
+            "maturation": "The action or process of maturing; development.",
+            "movement": "An act of changing physical location or position.",
+            "nourishment": "The food or other substances necessary for growth and health.",
+            "progression": "The process of developing or moving gradually towards a more advanced state.",
+            "prosperity": "The state of being prosperous; success and wealth.",
+            "pulsation": "A rhythmical throbbing of the arteries; regular beating.",
+            "regeneration": "The action or process of regenerating or being regenerated.",
+            "restoration": "The action of returning something to a former condition.",
+            "rhythm": "A strong, regular, repeated pattern of movement or sound.",
+            "strength": "The quality or state of being physically strong; power.",
+            "sustenance": "Food and drink regarded as a source of strength; nourishment.",
+            "transformation": "A thorough or dramatic change in form or appearance.",
+            "vitality": "The state of being strong and active; energy.",
+            "wholeness": "The state of forming a complete and harmonious whole; unity.",
+
+            // Truth attributes
+            "accuracy": "The quality of being correct or precise; exactness.",
+            "authenticity": "The quality of being authentic; genuineness.",
+            "certainty": "Firm conviction that something is the case; confidence.",
+            "correctness": "The quality of being free from error; accuracy.",
+            "credibility": "The quality of being trusted and believed in; reliability.",
+            "dependability": "The quality of being trustworthy and reliable.",
+            "exactness": "The quality of being exact; precision and accuracy.",
+            "fact": "A thing that is known or proved to be true; reality.",
+            "faithfulness": "The quality of being faithful; loyalty and reliability.",
+            "genuineness": "The quality of being genuine; authenticity.",
+            "honesty": "The quality of being honest; truthfulness and sincerity.",
+            "reality": "The world or state of things as they actually exist.",
+            "sincerity": "The quality of being free from pretense or deceit; honesty.",
+            "validity": "The quality of being logically or factually sound; correctness.",
+            "veracity": "Conformity to facts; accuracy and truthfulness.",
+            "verity": "A true principle or belief; truth.",
+
+            // Love attributes
+            "acceptance": "The action of consenting to receive or undertake something offered.",
+            "affection": "A gentle feeling of fondness or liking.",
+            "care": "The provision of what is necessary for health and protection.",
+            "compassion": "Sympathetic pity and concern for the sufferings or misfortunes of others.",
+            "forgiveness": "The action of forgiving or being forgiven; pardon.",
+            "generosity": "The quality of being kind and generous; liberality.",
+            "grace": "Simple elegance or refinement of movement; divine favor.",
+            "kindness": "The quality of being friendly, generous, and considerate.",
+            "mercy": "Compassion or forgiveness shown toward someone in one's power.",
+            "nurturing": "The process of caring for and encouraging growth or development.",
+            "patience": "The capacity to accept or tolerate delay without getting angry.",
+            "peace": "A state of tranquility and absence of disturbance or conflict.",
+            "service": "The action of helping or doing work for someone.",
+            "sympathy": "Feelings of pity and sorrow for someone else's misfortune.",
+            "tenderness": "Gentle caring or kindness; sensitivity.",
+
+            // Moral attributes
+            "character": "The mental and moral qualities distinctive to an individual.",
+            "conscience": "An inner feeling or voice viewed as acting as a guide to rightness.",
+            "duty": "A moral or legal obligation; a responsibility.",
+            "goodness": "The quality of being morally good or virtuous.",
+            "honor": "High respect; great esteem; adherence to ethical principles.",
+            "morality": "Principles concerning the distinction between right and wrong behavior.",
+            "principles": "Fundamental truths that serve as the foundation for behavior.",
+            "rectitude": "Morally correct behavior or thinking; righteousness.",
+            "responsibility": "The state of being responsible; accountability.",
+            "righteousness": "The quality of being morally right or justifiable.",
+            "uprightness": "The quality of being honest and honorable.",
+            "virtue": "Behavior showing high moral standards; goodness.",
+            "worthiness": "The quality of deserving attention or respect; merit.",
+            "spiritual understanding": "Comprehension through divine insight rather than material reasoning.",
+            "divine nature": "The essential character of God; spiritual essence.",
+            "true idea of good": "An accurate understanding of what is genuinely beneficial.",
+            "moral obligation": "A duty based on ethics and right conduct.",
+            "spiritual sense": "Perception through divine understanding rather than material senses.",
+            "grandeur and bliss": "Magnificent joy and supreme happiness.",
+            "reformed consciousness": "Awareness that has been transformed and improved.",
+            "awakened sense": "Alert perception that has been roused to activity.",
+
+            // Three-Degree Analysis terms
+            "evil beliefs": "False convictions that oppose good and truth.",
+            "passions": "Strong and barely controllable emotions; intense desires.",
+            "appetites": "Natural desires for the satisfaction of bodily needs.",
+            "fear": "An unpleasant emotion caused by the belief that something is dangerous.",
+            "depraved will": "A corrupt intention or desire that opposes moral good.",
+            "self-justification": "The action of providing an excuse for one's actions or beliefs.",
+            "pride": "A feeling of deep pleasure from one's own achievements; arrogance.",
+            "envy": "A feeling of discontented longing aroused by another's possessions or qualities.",
+            "deceit": "The action of deceiving someone; dishonesty and lies.",
+            "hatred": "Intense dislike or ill will; hostility.",
+            "revenge": "The action of inflicting hurt as retaliation for injury or wrong.",
+            "sin": "An immoral act considered to be a transgression against divine law.",
+            "sickness": "The state of being ill; disease or ailment.",
+            "disease": "A disorder of structure or function in a human, animal, or plant.",
+            "death": "The end of life; the permanent cessation of all vital functions.",
+            "humanity": "The quality of being humane; human nature collectively.",
+            "hope": "A feeling of expectation and desire for a certain thing to happen.",
+            "faith": "Complete trust or confidence in someone or something.",
+            "meekness": "The quality of being quiet, gentle, and submissive.",
+            "temperance": "Moderation in action, thought, or feeling; self-restraint.",
+            "purity": "The condition of being pure; freedom from contamination.",
+            "spiritual power": "Strength derived from divine source; godly influence.",
+            "holiness": "The state of being holy; sacred and morally perfect.",
+            "god's image": "The divine likeness reflected in spiritual creation.",
+            "divinity": "The quality of being divine; godlike nature.",
+            "all-inclusive": "Including everything; comprehensive and universal.",
+
+            // Path Allegory terms
+            "celestial city": "A heavenly dwelling place of spiritual consciousness.",
+            "sacred summit": "The highest point of spiritual understanding and achievement.",
+            "living fountains": "Sources of spiritual refreshment and life.",
+            "spiritual riches": "Valuable spiritual qualities and blessings.",
+            "father's house": "The divine home of spiritual consciousness.",
+            "heavenly messenger": "A divine communication or spiritual idea.",
+            "good part": "The better choice; spiritual over material pursuits.",
+            "mountain-horn": "A call from the heights of spiritual understanding.",
+            "path upward": "The journey toward higher spiritual consciousness.",
+            "patient toilers": "Those who work steadily and persistently toward spiritual growth.",
+            "watchers and workers": "Those who remain alert and active in spiritual development.",
+            "few laborers": "The small number who truly work for spiritual advancement.",
+            "ascending life climb": "The upward journey of spiritual progress.",
+            "rough cliffs": "The difficult challenges encountered in spiritual growth.",
+            "cool grottos": "Refreshing places of rest and reflection on the spiritual journey.",
+            "straight and narrow path": "The direct route of moral and spiritual integrity.",
+            "palatial dwelling": "Luxurious material living that distracts from spiritual growth.",
+            "sounds of festivity": "The noise and distraction of material pleasures.",
+            "gorgeously tapestried parlors": "Elaborately decorated rooms representing material luxury.",
+            "dancing-halls": "Places of entertainment that represent material pursuits.",
+            "banquet-rooms": "Spaces for material indulgence and excess.",
+            "adulterers": "Those who are unfaithful; spiritually impure.",
+            "fornicators": "Those who engage in immoral sexual behavior.",
+            "idolaters": "Those who worship false gods or material things.",
+            "drunkenness": "The state of being intoxicated; loss of spiritual clarity.",
+            "appetites and passions": "Physical desires and emotional impulses that distract from spirituality.",
+            "house of clay": "The mortal body; material existence.",
+            "heavy baggage": "Burdensome material possessions and concerns.",
+            "worldly policy": "Strategies based on material rather than spiritual understanding.",
+            "serene azure": "Peaceful blue sky representing spiritual tranquility.",
+            "unfathomable glory": "Incomprehensible divine magnificence.",
+            "mountain summit": "The peak of spiritual achievement and understanding.",
+            "washing feet": "Humble service and spiritual cleansing.",
+            "chosen good part": "The wise selection of spiritual over material pursuits.",
+            "losing life to find it": "Giving up material existence to gain spiritual life.",
+            "mountain-horn calling": "The divine summons from spiritual heights.",
+            "graciously meeting each citizen": "Kindly welcoming all who reach spiritual understanding."
+        };
+
+        function toggleNav() {
+            const drawer = document.querySelector('.nav-drawer');
+            const overlay = document.querySelector('.nav-overlay');
+            
+            drawer.classList.add('open');
+            overlay.classList.add('open');
+        }
+
+        function closeNav() {
+            const drawer = document.querySelector('.nav-drawer');
+            const overlay = document.querySelector('.nav-overlay');
+            
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
+        }
+
+        function loadMobileSynonym(synonymName) {
+            closeNav();
+            
+            // Update active state
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const data = synonymsData[synonymName];
+            const mobileMain = document.getElementById('mobileMain');
+            
+            mobileMain.innerHTML = `
+                <h2>${synonymName}</h2>
+                <p class="mobile-subtitle">Explore positive and negative attributes</p>
+                
+                <div class="mobile-attributes">
+                    <div class="mobile-attributes-column positive">
+                        <h3>Positive Attributes</h3>
+                        <div class="mobile-attribute-grid">
+                            ${data.positive.map(attr => 
+                                `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-attributes-column negative">
+                        <h3>Negative Attributes</h3>
+                        <div class="mobile-attribute-grid">
+                            ${data.negative.map(attr => 
+                                `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadMobileSpecial(sectionName) {
+            closeNav();
+            
+            const data = synonymsData[sectionName];
+            const mobileMain = document.getElementById('mobileMain');
+            
+            if (sectionName === 'DegreeAnalysis') {
+                mobileMain.innerHTML = `
+                    <h2>Three-Degree Analysis</h2>
+                    <p class="mobile-subtitle">Scientific Translation of Mortal Mind</p>
+                    
+                    <div class="special-mobile-grid">
+                        <div class="special-mobile-column degree-1">
+                            <h3 style="color: #ef4444;">First Degree - Depravity</h3>
+                            <div class="mobile-attribute-grid">
+                                ${data.first_degree_depravity.map(attr => 
+                                    `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="special-mobile-column degree-2">
+                            <h3 style="color: #f59e0b;">Second Degree - Moral</h3>
+                            <div class="mobile-attribute-grid">
+                                ${data.second_degree_moral.map(attr => 
+                                    `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="special-mobile-column degree-3">
+                            <h3 style="color: #10b981;">Third Degree - Spiritual</h3>
+                            <div class="mobile-attribute-grid">
+                                ${data.third_degree_spiritual.map(attr => 
+                                    `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (sectionName === 'PathAllegory') {
+                mobileMain.innerHTML = `
+                    <h2>Path Allegory</h2>
+                    <p class="mobile-subtitle">Journey from material to spiritual</p>
+                    
+                    <div class="special-mobile-grid">
+                        <div class="special-mobile-column path-material">
+                            <h3 style="color: #6b7280;">City Dwelling (Material)</h3>
+                            <div class="mobile-attribute-grid">
+                                ${data.city_dwelling_material.map(attr => 
+                                    `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="special-mobile-column path-awakening">
+                            <h3 style="color: #f59e0b;">Valley Awakening</h3>
+                            <div class="mobile-attribute-grid">
+                                ${data.valley_awakening.map(attr => 
+                                    `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="special-mobile-column path-spiritual">
+                            <h3 style="color: #10b981;">Spiritual Ascent</h3>
+                            <div class="mobile-attribute-grid">
+                                ${data.spiritual_ascent.map(attr => 
+                                    `<div class="mobile-attribute-item" onclick="showMobileDefinition('${attr}')">${attr}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function showMobileDefinition(word) {
+            const definitionSheet = document.getElementById('definitionSheet');
+            const definitionContent = document.getElementById('definitionContent');
+            
+            const definition = definitions[word.toLowerCase()] || 
+                `${word.charAt(0).toUpperCase() + word.slice(1)} - Definition not available in local dictionary. This term represents a spiritual quality or concept within the consciousness development framework.`;
+            
+            definitionContent.innerHTML = `
+                <div class="definition-word">${word}</div>
+                <div class="definition-text">${definition}</div>
+                <button class="close-definition" onclick="closeMobileDefinition()">Close</button>
+            `;
+            
+            definitionSheet.classList.add('open');
+        }
+
+        function closeMobileDefinition() {
+            const definitionSheet = document.getElementById('definitionSheet');
+            definitionSheet.classList.remove('open');
+        }
+
+        // Close definition sheet when tapping outside
+        document.addEventListener('touchstart', function(e) {
+            const definitionSheet = document.getElementById('definitionSheet');
+            if (definitionSheet.classList.contains('open') && !definitionSheet.contains(e.target)) {
+                closeMobileDefinition();
+            }
+        });
+    </script>
+</body>
+</html>
