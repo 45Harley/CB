@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who You Gonna Call? - Putnam CT Representatives</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 3px solid #d4af37;
+            margin-bottom: 40px;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #c9a961;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .location {
+            font-size: 1.1em;
+            color: #b8860b;
+            margin-top: 10px;
+        }
+
+        .level-section {
+            margin-bottom: 50px;
+        }
+
+        .level-title {
+            font-size: 2em;
+            color: #d4af37;
+            border-left: 5px solid #d4af37;
+            padding-left: 20px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .rep-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .rep-card {
+            background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rep-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+        }
+
+        .rep-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.4);
+            border-color: #ffd700;
+        }
+
+        .rep-name {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .rep-title {
+            font-size: 1.1em;
+            color: #c9a961;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .rep-party {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #444;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #b8b8b8;
+        }
+
+        .contact-icon {
+            color: #d4af37;
+            margin-right: 10px;
+            font-size: 1.1em;
+            min-width: 20px;
+        }
+
+        .contact-item a {
+            color: #c9a961;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+
+        .district-badge {
+            display: inline-block;
+            background: rgba(184, 134, 11, 0.3);
+            color: #d4af37;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            border-top: 2px solid #d4af37;
+            color: #888;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #2a2a2a, #1f1f1f);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .cta-box h2 {
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .cta-box p {
+            color: #c9a961;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .level-title {
+                font-size: 1.5em;
+            }
+
+            .rep-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👻 Who You Gonna Call? 📞</h1>
+            <div class="subtitle">Your Putnam, Connecticut Representatives</div>
+            <div class="location">Making Your Voice Heard in Putnam, CT</div>
+        </header>
+
+        <div class="cta-box">
+            <h2>Your Voice Matters</h2>
+            <p>These are YOUR representatives. They work for YOU. Don't know what to say? Start with "I'm a constituent and I need..."</p>
+        </div>
+
+        <!-- LOCAL GOVERNMENT -->
+        <div class="level-section">
+            <h2 class="level-title">🏛️ Local Government</h2>
+            <div class="rep-grid">
+                
+                <div class="rep-card">
+                    <div class="rep-name">Tracy Beaudoin</div>
+                    <div class="rep-title">First Selectwoman</div>
+                    <span class="rep-party">Town Executive</span>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <a href="mailto:tbeaudoin@putnamct.us">tbeaudoin@putnamct.us</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>(860) 963-6800</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏢</span>
+                            <span>Putnam Town Hall, 126 Church St</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rep-card">
+                    <div class="rep-name">Putnam Board of Selectmen</div>
+                    <div class="rep-title">Town Board</div>
+                    <span class="rep-party">Local Leadership</span>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>(860) 963-6800</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏢</span>
+                            <span>126 Church Street, Putnam, CT 06260</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🌐</span>
+                            <a href="https://www.putnamct.us" target="_blank">putnamct.us</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STATE GOVERNMENT -->
+        <div class="level-section">
+            <h2 class="level-title">🏛️ State Government</h2>
+            <div class="rep-grid">
+                
+                <div class="rep-card">
+                    <div class="rep-name">Pat Boyd</div>
+                    <div class="rep-title">State Representative</div>
+                    <span class="rep-party">Democrat</span>
+                    <div class="district-badge">District 50</div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <a href="mailto:Pat.Boyd@cga.ct.gov">Pat.Boyd@cga.ct.gov</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>(860) 240-8500</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏢</span>
+                            <span>Legislative Office Building, Hartford</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rep-card">
+                    <div class="rep-name">Mae Flexer</div>
+                    <div class="rep-title">State Senator</div>
+                    <span class="rep-party">Democrat</span>
+                    <div class="district-badge">District 29</div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <a href="mailto:Mae.Flexer@cga.ct.gov">Mae.Flexer@cga.ct.gov</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>(860) 240-0526</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏢</span>
+                            <span>State Capitol, Hartford</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rep-card">
+                    <div class="rep-name">Ned Lamont</div>
+                    <div class="rep-title">Governor of Connecticut</div>
+                    <span class="rep-party">Democrat</span>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>(860) 566-4840</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🌐</span>
+                            <a href="https://portal.ct.gov/office-of-the-governor" target="_blank">Contact Governor</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏢</span>
+                            <span>State Capitol, 210 Capitol Ave, Hartford</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FEDERAL GOVERNMENT -->
+        <div class="level-section">
+            <h2 class="level-title">🇺🇸 Federal Government</h2>
+            <div class="rep-grid">
+                
+                <div class="rep-card">
+                    <div class="rep-name">Joe Courtney</div>
+                    <div class="rep-title">U.S. Representative</div>
+                    <span class="rep-party">Democrat</span>
+                    <div class="district-badge">CT-2</div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>Washington: (202) 225-2076</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>Norwich Office: (860) 886-0139</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🌐</span>
+                            <a href="https://courtney.house.gov" target="_blank">courtney.house.gov</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rep-card">
+                    <div class="rep-name">Richard Blumenthal</div>
+                    <div class="rep-title">U.S. Senator</div>
+                    <span class="rep-party">Democrat</span>
+                    <div class="district-badge">Connecticut</div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>Washington: (202) 224-2823</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>Hartford: (860) 258-6940</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🌐</span>
+                            <a href="https://www.blumenthal.senate.gov" target="_blank">blumenthal.senate.gov</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rep-card">
+                    <div class="rep-name">Chris Murphy</div>
+                    <div class="rep-title">U.S. Senator</div>
+                    <span class="rep-party">Democrat</span>
+                    <div class="district-badge">Connecticut</div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>Washington: (202) 224-4041</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>Hartford: (860) 549-8463</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🌐</span>
+                            <a href="https://www.murphy.senate.gov" target="_blank">murphy.senate.gov</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <h2>Remember: They Work For You</h2>
+            <p>Every email. Every phone call. Every voice matters. Don't wait for someone else to speak up. <strong>You are the someone.</strong></p>
+        </div>
+
+        <footer>
+            <p>Putnam, Connecticut - Your voice, your representatives, your democracy.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Information current as of October 2025. Contact info subject to change.</p>
+        </footer>
+    </div>
+</body>
+</html>
