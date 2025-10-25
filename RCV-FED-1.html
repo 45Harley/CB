@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranked Federal Demands (Top 5 from 15)</title>
+    <style>
+        /* === Dark Mode Base Styles (Consistent across all forms) === */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 900px; /* Wider for 15 demands */
+        }
+
+        h1, h2 {
+            color: #C00000; /* Red accent for Federal Level */
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3a3a3a;
+            padding-bottom: 10px;
+        }
+
+        /* === Form Elements === */
+        .demand-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demand-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 8px; /* Slightly smaller margin for density */
+            background-color: #3a3a3a;
+            border-radius: 6px;
+            border-left: 5px solid #C00000;
+            transition: background-color 0.3s ease;
+        }
+
+        .demand-name {
+            font-size: 1.0em;
+            font-weight: bold;
+            width: 80%; 
+        }
+
+        .ranking-select select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #444;
+            color: #f0f0f0;
+            appearance: none;
+            cursor: pointer;
+            min-width: 80px;
+        }
+        
+        .ranking-select option:first-child {
+            color: #aaa;
+        }
+
+        /* === Information Sections === */
+        .info-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333333;
+            border-radius: 8px;
+            border: 1px solid #C00000;
+        }
+        
+        .info-section strong {
+            color: #C00000; 
+        }
+
+        /* === Submit Button === */
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background-color: #C00000; 
+            color: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .submit-button:hover {
+            background-color: #E00000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏛️ Rank Federal Priorities: The Next Agenda</h1>
+    <p style="color: #ccc; margin-bottom: 20px;">
+        Rank the following 15 demands based on your highest priorities for the Federal Government. You must select **exactly five unique ranks** (1st through 5th). All other demands must be marked **'0 - No Rank'**.
+    </p>
+
+    <form action="/submit-federal-demands" method="post">
+        
+        <ul class="demand-list">
+            <li class="demand-item">
+                <span class="demand-name">1. **Protect Democracy:** Pass laws to prevent politically motivated prosecution and enforce election certification integrity.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_1">Rank:</label>
+                    <select name="fed_rank_1" id="fed_rank_1" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">2. **Judicial Reform:** Implement term limits or mandatory age retirement for Supreme Court Justices.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_2">Rank:</label>
+                    <select name="fed_rank_2" id="fed_rank_2" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">3. **Restore Rule of Law:** Mandate executive branch compliance with all Congressional subpoenas and oversight requests.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_3">Rank:</label>
+                    <select name="fed_rank_3" id="fed_rank_3" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            
+            <li class="demand-item">
+                <span class="demand-name">4. **Healthcare Cost Control:** Cap prescription drug prices and significantly expand Affordable Care Act subsidies.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_4">Rank:</label>
+                    <select name="fed_rank_4" id="fed_rank_4" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">5. **Wealth Tax & Corporate Minimum:** Implement a wealth tax on billionaires and raise the corporate minimum tax rate.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_5">Rank:</label>
+                    <select name="fed_rank_5" id="fed_rank_5" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">6. **Student Debt Relief:** Cancel a significant portion of federal student loan debt for middle and low-income borrowers.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_6">Rank:</label>
+                    <select name="fed_rank_6" id="fed_rank_6" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">7. **Infrastructure & Green Energy:** Mandate a massive increase in spending on public transportation and clean energy grids.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_7">Rank:</label>
+                    <select name="fed_rank_7" id="fed_rank_7" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">8. **Universal Pre-K:** Establish a fully funded national program for free, high-quality universal preschool for all 3- and 4-year-olds.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_8">Rank:</label>
+                    <select name="fed_rank_8" id="fed_rank_8" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">9. **Immigration Reform:** Pass a clear path to citizenship for long-term undocumented residents and reform border asylum processes.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_9">Rank:</label>
+                    <select name="fed_rank_9" id="fed_rank_9" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">10. **Reproductive Rights:** Codify abortion access protections nationwide, overriding state bans via federal law.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_10">Rank:</label>
+                    <select name="fed_rank_10" id="fed_rank_10" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">11. **Gun Safety:** Reinstate and expand the federal ban on assault weapons and implement universal background checks.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_11">Rank:</label>
+                    <select name="fed_rank_11" id="fed_rank_11" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">12. **Foreign Aid & Alliances:** Significantly increase funding for NATO and humanitarian aid to democratic allies.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_12">Rank:</label>
+                    <select name="fed_rank_12" id="fed_rank_12" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">13. **Climate Mandates:** Use executive and legislative power to meet 2030 emissions reduction targets.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_13">Rank:</label>
+                    <select name="fed_rank_13" id="fed_rank_13" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">14. **Veterans' Benefits:** Fully fund and modernize the VA to eliminate wait times and expand mental health services.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_14">Rank:</label>
+                    <select name="fed_rank_14" id="fed_rank_14" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            <li class="demand-item">
+                <span class="demand-name">15. **Big Tech Regulation:** Enforce anti-trust actions against major technology companies and pass federal data privacy laws.</span>
+                <div class="ranking-select">
+                    <label for="fed_rank_15">Rank:</label>
+                    <select name="fed_rank_15" id="fed_rank_15" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+
+        <button type="submit" class="submit-button">Submit My Federal Top 5 Priorities</button>
+    </form>
+
+    <div class="info-section">
+        <h2>🗳️ Rules for Ranking & Tally Steps</h2>
+        
+        <h3>Ranking Rules (For the Voter)</h3>
+        <ol>
+            <li>**Mandatory Selection:** You must select a value (1-5, or 0) for *every* demand.</li>
+            <li>**Top-5 Requirement:** You must select **exactly five unique ranks** (1st through 5th) across the 15 demands.</li>
+            <li>**Exclusion:** The remaining ten demands **must** be marked as **'0 - No Rank'**.</li>
+        </ol>
+
+        <hr style="border-color:#555; margin: 15px 0;">
+
+        <h3>Tally Steps (Instant-Runoff Voting - Top 5)</h3>
+        <p>The IRV method is used only for the **Top 5** ranked choices. Demands marked '0' are not counted unless they are the beneficiary of a transfer vote.</p>
+        <ol>
+            <li>**Initial Count:** Count all the **1st-rank votes** for each of the 15 demands.</li>
+            <li>**Elimination and Transfer:** Demands with the fewest 1st-rank votes are eliminated. Votes for the eliminated demand are **transferred** to the voter's next-highest ranked demand (2nd, 3rd, 4th, or 5th). Demands marked '0' are skipped entirely during the transfer process.</li>
+            <li>**Repeat:** The process continues until one demand secures a **majority** of the active votes.</li>
+        </ol>
+
+    </div>
+
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const selects = document.querySelectorAll('.ranking-select select');
+        let isValid = true;
+        let selectedRanks = [];
+
+        selects.forEach(select => {
+            const rank = select.value;
+
+            // Check 1: Must select a value (1-5 or 0) for all 15 demands
+            if (!rank) {
+                isValid = false;
+                alert('Please select a rank (1-5 or 0) for ALL 15 demands.');
+                event.preventDefault(); 
+                return;
+            }
+
+            // Check 2: Collect only the prioritized ranks (1, 2, 3, 4, 5)
+            if (rank !== '0') {
+                // Check 3: Check for duplicate prioritized ranks (uniqueness)
+                if (selectedRanks.includes(rank)) {
+                    isValid = false;
+                    alert('You cannot assign the same **prioritized** rank (' + rank + ') to multiple demands. Ranks 1 through 5 must be unique.');
+                    event.preventDefault(); 
+                    return;
+                }
+                selectedRanks.push(rank);
+            }
+        });
+
+        // Final Check 4: Must have EXACTLY five unique ranks (1 through 5)
+        if (isValid && selectedRanks.length !== 5) {
+             alert('You must rank **EXACTLY FIVE** demands (Ranks 1, 2, 3, 4, and 5) to submit a valid priority vote. Please check your selections.');
+             isValid = false;
+             event.preventDefault(); 
+        }
+
+        if (isValid) {
+            console.log('Form is valid. Submitting federal priorities...');
+        }
+    });
+</script>
+
+</body>
+</html>

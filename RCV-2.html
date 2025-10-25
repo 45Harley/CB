@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranked Civic Demands - Putnam, CT (Dark Mode)</title>
+    <style>
+        /* === Dark Mode Base Styles === */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1, h2 {
+            color: #4CAF50; /* Green accent - Corrected */
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3a3a3a;
+            padding-bottom: 10px;
+        }
+
+        /* === Form Elements === */
+        .demand-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demand-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #3a3a3a;
+            border-radius: 6px;
+            border-left: 5px solid #4CAF50; /* Green accent - Corrected */
+            transition: background-color 0.3s ease;
+        }
+
+        .demand-item:hover {
+            background-color: #444444;
+        }
+
+        .demand-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            width: 70%;
+        }
+
+        .ranking-select select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #444;
+            color: #f0f0f0;
+            appearance: none;
+            cursor: pointer;
+            min-width: 80px;
+        }
+
+        /* === Information Sections === */
+        .info-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333333;
+            border-radius: 8px;
+            border: 1px solid #4CAF50; /* Green accent - Corrected */
+        }
+        
+        .info-section h2 {
+            color: #f0f0f0;
+            border-bottom: 1px solid #555;
+            text-align: left;
+            padding-left: 0;
+            margin-top: 0;
+        }
+        
+        .info-section h3 {
+            color: #ccc;
+            border-bottom: 1px solid #555;
+            text-align: left;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+
+        .info-section ol, .info-section ul {
+            padding-left: 20px;
+            margin-top: 15px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #ccc;
+        }
+        
+        .info-section strong {
+            color: #4CAF50; /* Green accent - Corrected */
+        }
+
+        .demand-detail {
+            margin-bottom: 25px;
+            padding: 10px 0;
+        }
+
+        .demand-detail strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+            color: #4CAF50; /* Green accent - Corrected */
+        }
+
+        .demand-detail p {
+            margin-top: 5px;
+            margin-bottom: 0;
+            color: #ccc;
+        }
+        
+        /* === Submit Button === */
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background-color: #4CAF50; /* Green accent - Corrected */
+            color: #1a1a1a;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Rank Putnam, CT Priorities</h1>
+
+    <form action="/submit-putnam-demands" method="post">
+        <p style="color: #ccc; margin-bottom: 20px;">
+            Based on current town priorities, rank these demands from **1 (Highest Priority)** to **5 (Lowest Priority)**. Select **'0 - No Rank'** for demands you do not wish to prioritize.
+        </p>
+
+        <ul class="demand-list">
+            <li class="demand-item">
+                <span class="demand-name">1. Increase **Affordable Housing** stock and promote housing diversity.</span>
+                <div class="ranking-select">
+                    <label for="rank_A">Rank:</label>
+                    <select name="rank_A" id="rank_A" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">2. Invest in **Infrastructure** (roads/sidewalks) and Town Center amenities (trails/courts).</span>
+                <div class="ranking-select">
+                    <label for="rank_B">Rank:</label>
+                    <select name="rank_B" id="rank_B" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">3. Appoint a **Volunteer Civic Engagement Liaison** to support community-led initiatives.</span>
+                <div class="ranking-select">
+                    <label for="rank_C">Rank:</label>
+                    <select name="rank_C" id="rank_C" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">4. Improve access to **Mental Health & Substance Use** treatment services.</span>
+                <div class="ranking-select">
+                    <label for="rank_D">Rank:</label>
+                    <select name="rank_D" id="rank_D" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            
+            <li class="demand-item">
+                <span class="demand-name">5. Commit to **Citizen-Friendly Data Access** & establish public response timeliness goals.</span>
+                <div class="ranking-select">
+                    <label for="rank_E">Rank:</label>
+                    <select name="rank_E" id="rank_E" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+
+        <button type="submit" class="submit-button">Submit My Ranked Priorities</button>
+    </form>
+
+    <div class="info-section">
+        
+        <h2>📊 Demand Explanations and Benefits</h2>
+
+        <div class="demand-detail">
+            <strong>1. Increase Affordable Housing stock and promote housing diversity.</strong>
+            <p><strong>Explanation:</strong> This addresses the need to increase housing availability, especially for seniors, young professionals, and those with moderate incomes, as identified in the Town's Affordable Housing Plan. This includes promoting multifamily conversions and accessory dwelling units.</p>
+            <p><strong>Benefit:</strong> Helps prevent young people from leaving Putnam, supports an aging population, stabilizes the workforce, and increases overall **economic diversity** and vitality.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>2. Invest in Infrastructure (roads/sidewalks) and Town Center amenities (trails/courts).</strong>
+            <p><strong>Explanation:</strong> This focuses on maintaining and upgrading vital public works, including improving roads, modernizing utilities, and investing in recreational spaces like the Air Line Trail and Church Street Tennis Courts, which enhance the quality of life.</p>
+            <p><strong>Benefit:</strong> Improves **safety and accessibility** for pedestrians and drivers, reduces long-term maintenance costs, and attracts residents and visitors by enhancing the appeal of the downtown area and recreational opportunities.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>3. Appoint a Volunteer Civic Engagement Liaison.</strong>
+            <p><strong>Explanation:</strong> This demand establishes a single, formal point of contact within the Town Hall—a **"door-opening"** measure—by designating a **volunteer Liaison** role. This volunteer would coordinate between community-led civic initiatives (like The People's Branch) and Town departments, helping residents navigate resources, and providing internal guidance for civic projects to succeed.</p>
+            <p><strong>Benefit:</strong> Creates a **clear, consistent, and cost-effective pathway** for citizens to get involved, ensuring that grassroots projects do not get lost in bureaucracy. It improves the accessibility of local government without increasing the municipal payroll, making Putnam a more receptive environment for civic innovators and volunteers.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>4. Improve access to Mental Health & Substance Use treatment services.</strong>
+            <p><strong>Explanation:</strong> Regional health assessments consistently highlight barriers to accessing mental health care and substance use disorder treatment, issues that affect public health and safety across Northeastern CT, including Putnam.</p>
+            <p><strong>Benefit:</strong> Leads to a **healthier, safer community**, reduces the burden on emergency services, and addresses underlying social determinants of health that impact many families and individuals.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>5. Commit to Citizen-Friendly Data Access & establish public response timeliness goals.</strong>
+            <p><strong>Explanation:</strong> This is the **"first step"** in modernizing civic interaction. It requires the Town to commit to making non-confidential municipal data (e.g., budget summaries, planning documents) readily available in easily accessible digital formats. It also mandates the establishment of measurable goals for **timely, public responses** to citizen-submitted requests and ranked priorities.</p>
+            <p><strong>Benefit:</strong> Increases **government transparency and accountability**. Easy access to data empowers residents to base their proposals on facts, while guaranteed response times build trust and demonstrate that the Town values citizen input and modern communication methods.</p>
+        </div>
+        
+        <h2 style="margin-top: 40px;">🗳️ Rules for Ranking & Tally Steps</h2>
+        
+        <h3>Ranking Rules (For the Voter)</h3>
+        <ol>
+            <li>**Uniqueness for Priority:** You must assign a **unique rank** (1, 2, 3, 4, 5) to each demand you prioritize. You cannot give two demands the same rank.</li>
+            <li>**Exclusion:** Selecting **'0 - No Rank'** means you are **not prioritizing** this demand. 'No Rank' can be selected for multiple demands.</li>
+            <li>**Mandatory Selection:** You must select a value (1-5, or 0) for *every* demand.</li>
+        </ol>
+
+        <hr style="border-color:#555; margin: 15px 0;">
+
+        <h3>Instant-Runoff Tally Steps (How Votes Are Counted)</h3>
+        <p>The **Instant-Runoff Voting (IRV)** method is used to determine the highest-prioritized demands based on all submitted rankings.</p>
+        <ol>
+            <li>**Initial Count:** Count the number of **1st-rank votes** (Rank '1') for each demand.</li>
+            <li>**Majority Check:** If a demand receives **over 50%** of the total ranked votes, it is declared the winner.</li>
+            <li>**Elimination:** If no demand reaches 50%, the demand with the **fewest 1st-rank votes** is **eliminated**.</li>
+            <li>**Vote Transfer:** All votes for the eliminated demand are **reallocated** to the voter's next-highest ranked, non-eliminated demand.</li>
+            <li>**Repeat:** Steps 1 through 4 are repeated until one demand secures **more than 50%** of the active votes.</li>
+        </ol>
+
+    </div>
+
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const selects = document.querySelectorAll('.ranking-select select');
+        let isValid = true;
+        let selectedRanks = [];
+
+        selects.forEach(select => {
+            const rank = select.value;
+
+            // Check 1: Must select a value (1-5 or 0)
+            if (!rank) {
+                isValid = false;
+                alert('Please select a rank or "0 - No Rank" for ALL demands.');
+                event.preventDefault(); 
+                return;
+            }
+
+            // Check 2: Collect only the prioritized ranks (1, 2, 3, 4, 5)
+            if (rank !== '0') {
+                // Check 3: Check for duplicate prioritized ranks (uniqueness)
+                if (selectedRanks.includes(rank)) {
+                    isValid = false;
+                    alert('You cannot assign the same **prioritized** rank (' + rank + ') to multiple demands. Ranks 1 through 5 must be unique.');
+                    event.preventDefault(); 
+                    return;
+                }
+                selectedRanks.push(rank);
+            }
+        });
+
+        // Check 4 (Optional but recommended): Ensure the user ranked at least one item
+        if (isValid && selectedRanks.length === 0) {
+             alert('Please rank at least one demand (Rank 1 through 5) to submit a priority vote.');
+             isValid = false;
+             event.preventDefault(); 
+        }
+
+        if (isValid) {
+            console.log('Form is valid. Submitting priorities...');
+        }
+    });
+</script>
+
+</body>
+</html>

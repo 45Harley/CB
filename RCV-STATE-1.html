@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranked State Demands - Connecticut (Dark Mode)</title>
+    <style>
+        /* === Dark Mode Base Styles (Consistent with Putnam form) === */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 800px; 
+        }
+
+        h1, h2 {
+            color: #0070B6; /* Blue accent for State Level (CT Flag Color) */
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3a3a3a;
+            padding-bottom: 10px;
+        }
+
+        /* === Form Elements === */
+        .demand-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demand-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #3a3a3a;
+            border-radius: 6px;
+            border-left: 5px solid #0070B6; /* State accent color */
+            transition: background-color 0.3s ease;
+        }
+
+        .demand-item:hover {
+            background-color: #444444;
+        }
+
+        .demand-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            width: 70%;
+        }
+
+        .ranking-select select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #444;
+            color: #f0f0f0;
+            appearance: none;
+            cursor: pointer;
+            min-width: 80px;
+        }
+
+        /* === Information Sections (Adjusted for State Accent) === */
+        .info-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333333;
+            border-radius: 8px;
+            border: 1px solid #0070B6;
+        }
+        
+        .info-section h3 {
+            color: #ccc;
+            border-bottom: 1px solid #555;
+            text-align: left;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #ccc;
+        }
+        
+        .info-section strong {
+            color: #0070B6; 
+        }
+
+        .demand-detail strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+            color: #0070B6;
+        }
+
+        .demand-detail p {
+            margin-top: 5px;
+            margin-bottom: 0;
+            color: #ccc;
+        }
+        
+        /* === Submit Button (State Accent) === */
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background-color: #0070B6; 
+            color: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .submit-button:hover {
+            background-color: #0099D8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏛️ Rank Connecticut State Priorities</h1>
+
+    <form action="/submit-state-demands" method="post">
+        <p style="color: #ccc; margin-bottom: 20px;">
+            Rank these Connecticut state-level demands from **1 (Highest Priority)** to **5 (Lowest Priority)**. Select **'0 - No Rank'** for demands you do not wish to prioritize.
+        </p>
+
+        <ul class="demand-list">
+            <li class="demand-item">
+                <span class="demand-name">1. **State Tax Reform:** Re-evaluate property tax relief and state income tax structure.</span>
+                <div class="ranking-select">
+                    <label for="state_rank_1">Rank:</label>
+                    <select name="state_rank_1" id="state_rank_1" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">2. **Transportation Investment:** Prioritize modernization and expansion of highways and rail/bus transit.</span>
+                <div class="ranking-select">
+                    <label for="state_rank_2">Rank:</label>
+                    <select name="state_rank_2" id="state_rank_2" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">3. **Education Funding Equity:** Revise the ECS (Education Cost Sharing) formula for fairer town funding.</span>
+                <div class="ranking-select">
+                    <label for="state_rank_3">Rank:</label>
+                    <select name="state_rank_3" id="state_rank_3" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+
+            <li class="demand-item">
+                <span class="demand-name">4. **Environmental Policy:** Increase regulation on climate resilience and renewable energy standards.</span>
+                <div class="ranking-select">
+                    <label for="state_rank_4">Rank:</label>
+                    <select name="state_rank_4" id="state_rank_4" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+            
+            <li class="demand-item">
+                <span class="demand-name">5. **Healthcare Affordability:** Introduce state-level initiatives to reduce medical costs and expand coverage.</span>
+                <div class="ranking-select">
+                    <label for="state_rank_5">Rank:</label>
+                    <select name="state_rank_5" id="state_rank_5" required>
+                        <option value="">-- Select --</option>
+                        <option value="0">0 - No Rank</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+
+        <button type="submit" class="submit-button">Submit My State Priorities</button>
+    </form>
+
+    <div class="info-section">
+        
+        <h2>📊 Demand Explanations and Benefits</h2>
+
+        <div class="demand-detail">
+            <strong>1. State Tax Reform: Re-evaluate property tax relief and state income tax structure.</strong>
+            <p><strong>Explanation:</strong> Focuses on the state's financial policies, including potential tax cuts for middle-income residents or adjustments to how the state aids municipalities with property tax burdens.</p>
+            <p><strong>Benefit:</strong> Aims to reduce the overall tax burden on residents and businesses, potentially increasing affordability and economic competitiveness in Connecticut.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>2. Transportation Investment: Prioritize modernization and expansion of highways and rail/bus transit.</strong>
+            <p><strong>Explanation:</strong> Concerns large-scale infrastructure projects managed by the state DOT, such as fixing congested highways (I-84, I-95) or improving reliability and reach of the state rail and bus systems.</p>
+            <p><strong>Benefit:</strong> Reduces commute times, improves logistics for state businesses, and contributes to better public safety on roadways.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>3. Education Funding Equity: Revise the ECS (Education Cost Sharing) formula for fairer town funding.</strong>
+            <p><strong>Explanation:</strong> Involves changing the formula by which the state distributes billions in aid to local school districts. This directly impacts town budgets and the quality of local education.</p>
+            <p><strong>Benefit:</strong> Aims to ensure that all students, regardless of their town's property wealth, have access to high-quality, equitably funded public education.</p>
+        </div>
+
+        <div class="demand-detail">
+            <strong>4. Environmental Policy: Increase regulation on climate resilience and renewable energy standards.</strong>
+            <p><strong>Explanation:</strong> Focuses on passing state laws related to pollution, conservation, renewable portfolio standards, and planning for climate change impacts like coastal flooding and severe weather.</p>
+            <p><strong>Benefit:</strong> Protects Connecticut's natural resources, ensures a transition to cleaner energy sources, and makes communities more resilient to future environmental challenges.</p>
+        </div>
+        
+        <div class="demand-detail">
+            <strong>5. Healthcare Affordability: Introduce state-level initiatives to reduce medical costs and expand coverage.</strong>
+            <p><strong>Explanation:</strong> Addresses high insurance premiums, drug costs, and limited access to specific health services. State initiatives could include public health insurance options or stronger price caps.</p>
+            <p><strong>Benefit:</strong> Improves overall public health outcomes and relieves financial stress on individuals and families dealing with high medical expenses.</p>
+        </div>
+        
+        <h2 style="margin-top: 40px;">🗳️ Rules for Ranking & Tally Steps</h2>
+        
+        <h3>Ranking Rules (For the Voter)</h3>
+        <ol>
+            <li>**Uniqueness for Priority:** You must assign a **unique rank** (1, 2, 3, 4, 5) to each demand you prioritize. You cannot give two demands the same rank.</li>
+            <li>**Exclusion:** Selecting **'0 - No Rank'** means you are **not prioritizing** this demand. 'No Rank' can be selected for multiple demands.</li>
+            <li>**Mandatory Selection:** You must select a value (1-5, or 0) for *every* demand.</li>
+        </ol>
+
+        <hr style="border-color:#555; margin: 15px 0;">
+
+        <h3>Instant-Runoff Tally Steps (How Votes Are Counted)</h3>
+        <p>The **Instant-Runoff Voting (IRV)** method is used to determine the highest-prioritized demands based on all submitted rankings.</p>
+        <ol>
+            <li>**Initial Count:** Count the number of **1st-rank votes** (Rank '1') for each demand.</li>
+            <li>**Majority Check:** If a demand receives **over 50%** of the total ranked votes, it is declared the winner.</li>
+            <li>**Elimination:** If no demand reaches 50%, the demand with the **fewest 1st-rank votes** is **eliminated**.</li>
+            <li>**Vote Transfer:** All votes for the eliminated demand are **reallocated** to the voter's next-highest ranked, non-eliminated demand.</li>
+            <li>**Repeat:** Steps 1 through 4 are repeated until one demand secures **more than 50%** of the active votes.</li>
+        </ol>
+
+    </div>
+
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const selects = document.querySelectorAll('.ranking-select select');
+        let isValid = true;
+        let selectedRanks = [];
+
+        selects.forEach(select => {
+            const rank = select.value;
+
+            // Check 1: Must select a value (1-5 or 0)
+            if (!rank) {
+                isValid = false;
+                alert('Please select a rank or "0 - No Rank" for ALL demands.');
+                event.preventDefault(); 
+                return;
+            }
+
+            // Check 2: Collect only the prioritized ranks (1, 2, 3, 4, 5)
+            if (rank !== '0') {
+                // Check 3: Check for duplicate prioritized ranks (uniqueness)
+                if (selectedRanks.includes(rank)) {
+                    isValid = false;
+                    alert('You cannot assign the same **prioritized** rank (' + rank + ') to multiple demands. Ranks 1 through 5 must be unique.');
+                    event.preventDefault(); 
+                    return;
+                }
+                selectedRanks.push(rank);
+            }
+        });
+
+        // Check 4: Ensure the user ranked at least one item
+        if (isValid && selectedRanks.length === 0) {
+             alert('Please rank at least one demand (Rank 1 through 5) to submit a priority vote.');
+             isValid = false;
+             event.preventDefault(); 
+        }
+
+        if (isValid) {
+            console.log('Form is valid. Submitting state priorities...');
+        }
+    });
+</script>
+
+</body>
+</html>
