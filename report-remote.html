@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic DNA Analytics Report</title>
+<style>
+    body {
+        background-color: #121212;
+        color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        border: 10px solid gold;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid gold;
+    }
+
+    h1 {
+        color: gold;
+        font-size: 2.5em;
+        margin: 0 0 10px 0;
+    }
+
+    h2 {
+        color: gold;
+        border-bottom: 2px solid gold;
+        padding-bottom: 10px;
+        margin-top: 30px;
+    }
+
+    h3 {
+        color: #ffd700;
+        margin-top: 20px;
+    }
+
+    .controls {
+        background: #1e1e1e;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        margin-bottom: 30px;
+    }
+
+    .control-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        color: gold;
+        font-weight: bold;
+        margin-bottom: 8px;
+        font-size: 1.1em;
+    }
+
+    select, button, input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        background: #2c2c2c;
+        color: #fff;
+        border: 2px solid gold;
+        border-radius: 4px;
+        font-size: 1em;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    select:hover, button:hover {
+        background: #333;
+    }
+
+    button {
+        background: gold;
+        color: #121212;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #ffd700;
+        transform: scale(1.02);
+    }
+
+    button:disabled {
+        background: #666;
+        color: #999;
+        cursor: not-allowed;
+        border-color: #666;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        border-left: 4px solid gold;
+    }
+
+    .stat-label {
+        color: #aaa;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+
+    .stat-value {
+        color: gold;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .stat-subtext {
+        color: #ccc;
+        font-size: 0.85em;
+        margin-top: 5px;
+    }
+
+    .data-table {
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        overflow-x: auto;
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: #2c2c2c;
+        color: gold;
+        padding: 12px;
+        text-align: left;
+        border-bottom: 2px solid gold;
+    }
+
+    td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #333;
+    }
+
+    tr:hover {
+        background: #2c2c2c;
+    }
+
+    .error {
+        background: #660000;
+        color: #ffcccc;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid darkred;
+        margin-bottom: 20px;
+    }
+
+    .info {
+        background: #1e1e1e;
+        color: #ffd700;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid gold;
+        margin-bottom: 20px;
+    }
+
+    #reportContent {
+        display: none;
+    }
+
+    .bar-chart {
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        margin-bottom: 30px;
+    }
+
+    .bar-item {
+        margin-bottom: 15px;
+    }
+
+    .bar-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        color: #f5f5f5;
+    }
+
+    .bar-bg {
+        background: #2c2c2c;
+        height: 30px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .bar-fill {
+        background: linear-gradient(90deg, gold, #ffd700);
+        height: 100%;
+        transition: width 0.5s ease;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        color: #121212;
+        font-weight: bold;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.85em;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .badge-federal { background: #ff6b6b; color: white; }
+    .badge-state { background: #4ecdc4; color: white; }
+    .badge-local { background: #95e1d3; color: #121212; }
+    .badge-duplicate { background: #666; color: white; }
+    .badge-original { background: gold; color: #121212; }
+</style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>📊 Civic DNA Analytics Report</h1>
+        <p>Analyze civic engagement data across participating states</p>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="stateSelect">Select State:</label>
+            <select id="stateSelect" disabled>
+                <option value="">-- Loading data... --</option>
+            </select>
+        </div>
+
+        <button id="generateReport" onclick="generateReport()" disabled>Generate Report</button>
+    </div>
+
+    <div id="errorContainer"></div>
+    <div id="reportContent"></div>
+</div>
+
+<script>
+let allData = [];
+let stateData = {};
+const DATA_FILE_URL = 'civic_data.jsonl'; // <-- **NEW: Defines the static data file location**
+
+document.addEventListener('DOMContentLoaded', function() {
+    const generateButton = document.getElementById('generateReport');
+    const stateSelect = document.getElementById('stateSelect');
+    
+    showInfo('Attempting to load data from server...');
+
+    // **NEW: Automatic fetch logic**
+    fetch(DATA_FILE_URL)
+        .then(response => {
+            if (!response.ok) {
+                // If the file is not found (404), this error will trigger
+                throw new Error(`HTTP error! Status: ${response.status} (Make sure '${DATA_FILE_URL}' is in the same folder as report.html)`);
+            }
+            return response.text();
+        })
+        .then(text => {
+            const lines = text.split('\n').filter(line => line.trim());
+            allData = lines.map(line => JSON.parse(line));
+            
+            processData(); // This function populates the state dropdown
+            
+            // Enable controls after successful load
+            stateSelect.disabled = false;
+            generateButton.disabled = false;
+            showInfo(`Successfully loaded ${allData.length} records.`);
+        })
+        .catch(error => {
+            // Handle any fetch or parsing error
+            showError('Error loading data file: ' + error.message);
+            stateSelect.innerHTML = '<option value="">-- Failed to load data --</option>';
+        });
+    // **REMOVED: Original file upload event listener is gone**
+});
+
+
+function processData() {
+    // Extract unique states
+    const states = [...new Set(allData.map(record => record.state))].sort();
+    
+    // Populate state dropdown
+    const stateSelect = document.getElementById('stateSelect');
+    stateSelect.innerHTML = '<option value="">-- Select a state --</option>';
+    stateSelect.innerHTML += '<option value="ALL">ALL STATES</option>';
+    
+    states.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state;
+        option.textContent = state;
+        stateSelect.appendChild(option);
+    });
+}
+
+function generateReport() {
+    const selectedState = document.getElementById('stateSelect').value;
+    
+    if (!selectedState) {
+        showError('Please select a state');
+        return;
+    }
+
+    const filteredData = selectedState === 'ALL' 
+        ? allData 
+        : allData.filter(record => record.state === selectedState);
+
+    if (filteredData.length === 0) {
+        showError('No data found for selected state');
+        return;
+    }
+
+    displayReport(filteredData, selectedState);
+}
+
+function displayReport(data, stateName) {
+    const reportContent = document.getElementById('reportContent');
+    reportContent.style.display = 'block';
+    
+    // Calculate statistics
+    const stats = calculateStats(data);
+    
+    let html = `<h2>${stateName === 'ALL' ? 'All States' : stateName} - Civic Engagement Report</h2>`;
+    
+    // Overview Stats
+    html += `<div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Records</div>
+            <div class="stat-value">${stats.total}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Original Intents</div>
+            <div class="stat-value">${stats.original}</div>
+            <div class="stat-subtext">${stats.originalPercent}% of total</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Duplicate Intents</div>
+            <div class="stat-value">${stats.duplicate}</div>
+            <div class="stat-subtext">${stats.duplicatePercent}% of total</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Unique Towns</div>
+            <div class="stat-value">${stats.uniqueTowns}</div>
+        </div>
+    </div>`;
+
+    // Jurisdiction Breakdown
+    html += `<h3>Jurisdiction Level Distribution</h3>
+    <div class="bar-chart">`;
+    
+    const maxJurisdiction = Math.max(...Object.values(stats.jurisdiction));
+    for (const [level, count] of Object.entries(stats.jurisdiction)) {
+        const percent = ((count / stats.total) * 100).toFixed(1);
+        const width = (count / maxJurisdiction) * 100;
+        html += `
+        <div class="bar-item">
+            <div class="bar-label">
+                <span><span class="category-badge badge-${level.toLowerCase()}">${level}</span></span>
+                <span>${count} (${percent}%)</span>
+            </div>
+            <div class="bar-bg">
+                <div class="bar-fill" style="width: ${width}%"></div>
+            </div>
+        </div>`;
+    }
+    html += `</div>`;
+
+    // Category Breakdown
+    html += `<h3>Intent Category Distribution</h3>
+    <div class="bar-chart">`;
+    
+    const maxCategory = Math.max(...Object.values(stats.categories));
+    const sortedCategories = Object.entries(stats.categories).sort((a, b) => b[1] - a[1]);
+    
+    for (const [category, count] of sortedCategories) {
+        const percent = ((count / stats.total) * 100).toFixed(1);
+        const width = (count / maxCategory) * 100;
+        html += `
+        <div class="bar-item">
+            <div class="bar-label">
+                <span>${category}</span>
+                <span>${count} (${percent}%)</span>
+            </div>
+            <div class="bar-bg">
+                <div class="bar-fill" style="width: ${width}%"></div>
+            </div>
+        </div>`;
+    }
+    html += `</div>`;
+
+    // Towns Breakdown (if single state)
+    if (stateName !== 'ALL') {
+        html += `<h3>Records by Town</h3>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Town</th>
+                        <th>Total Records</th>
+                        <th>Federal</th>
+                        <th>State</th>
+                        <th>Local</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        
+        const sortedTowns = Object.entries(stats.townBreakdown).sort((a, b) => b[1].total - a[1].total);
+        for (const [town, counts] of sortedTowns) {
+            html += `
+                <tr>
+                    <td><strong>${town}</strong></td>
+                    <td>${counts.total}</td>
+                    <td>${counts.FEDERAL || 0}</td>
+                    <td>${counts.STATE || 0}</td>
+                    <td>${counts.LOCAL || 0}</td>
+                </tr>`;
+        }
+        html += `</tbody></table></div>`;
+    } else {
+        // States breakdown for ALL
+        html += `<h3>Records by State</h3>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>Total Records</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        
+        const sortedStates = Object.entries(stats.stateBreakdown).sort((a, b) => b[1] - a[1]);
+        for (const [state, count] of sortedStates) {
+            const percent = ((count / stats.total) * 100).toFixed(1);
+            html += `
+                <tr>
+                    <td><strong>${state}</strong></td>
+                    <td>${count}</td>
+                    <td>${percent}%</td>
+                </tr>`;
+        }
+        html += `</tbody></table></div>`;
+    }
+
+    // Top Concerns
+    html += `<h3>Top 10 Most Frequent Concerns</h3>
+    <div class="data-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Intent Text</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>`;
+    
+    stats.topConcerns.slice(0, 10).forEach((concern, index) => {
+        html += `
+            <tr>
+                <td><strong>${index + 1}</strong></td>
+                <td>${concern.text}</td>
+                <td>${concern.count}</td>
+            </tr>`;
+    });
+    html += `</tbody></table></div>`;
+
+    reportContent.innerHTML = html;
+    
+    // Scroll to report
+    reportContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function calculateStats(data) {
+    const stats = {
+        total: data.length,
+        original: data.filter(r => r.duplication_status === 'original').length,
+        duplicate: data.filter(r => r.duplication_status === 'duplicate').length,
+        uniqueTowns: [...new Set(data.map(r => r.town))].length,
+        jurisdiction: {},
+        categories: {},
+        townBreakdown: {},
+        stateBreakdown: {},
+        topConcerns: []
+    };
+
+    stats.originalPercent = ((stats.original / stats.total) * 100).toFixed(1);
+    stats.duplicatePercent = ((stats.duplicate / stats.total) * 100).toFixed(1);
+
+    // Count by jurisdiction
+    data.forEach(record => {
+        stats.jurisdiction[record.jurisdiction_level] = (stats.jurisdiction[record.jurisdiction_level] || 0) + 1;
+        stats.categories[record.category] = (stats.categories[record.category] || 0) + 1;
+        
+        // Town breakdown
+        if (!stats.townBreakdown[record.town]) {
+            stats.townBreakdown[record.town] = { total: 0 };
+        }
+        stats.townBreakdown[record.town].total++;
+        stats.townBreakdown[record.town][record.jurisdiction_level] = 
+            (stats.townBreakdown[record.town][record.jurisdiction_level] || 0) + 1;
+
+        // State breakdown
+        stats.stateBreakdown[record.state] = (stats.stateBreakdown[record.state] || 0) + 1;
+    });
+
+    // Top concerns
+    const concernCounts = {};
+    data.forEach(record => {
+        const text = record.intent_text;
+        concernCounts[text] = (concernCounts[text] || 0) + 1;
+    });
+
+    stats.topConcerns = Object.entries(concernCounts)
+        .map(([text, count]) => ({ text, count }))
+        .sort((a, b) => b.count - a.count);
+
+    return stats;
+}
+
+function showError(message) {
+    const errorContainer = document.getElementById('errorContainer');
+    errorContainer.innerHTML = `<div class="error">❌ ${message}</div>`;
+    // Removed the timeout to keep critical file load errors visible
+}
+
+function showInfo(message) {
+    const errorContainer = document.getElementById('errorContainer');
+    errorContainer.innerHTML = `<div class="info">✓ ${message}</div>`;
+    // Removed the timeout to keep loading info visible until report is generated
+}
+</script>
+</body>
+</html>
