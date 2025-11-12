@@ -1,0 +1,30 @@
+{
+  "sidebarTitle": "Related Resources",
+  "narrativeLinks": [
+    {
+      "linkText": "Ethical Foundation: The Golden Rule",
+      "narrativeID": "details-ethical-core",
+      "content": "The **Core Principles** of our governance model are founded on a universal ethical command: **The Golden Rule**. Across all major world philosophies and religions—from Christianity, Judaism, and Islam to Buddhism, Hinduism, and Confucianism—there is one common ethical command: **The Golden Rule**. Whether stated as, \"Do to others what you would have them do to you,\" or \"Hurt not others in ways that you yourself would find hurtful,\" this principle establishes the required standard for a self-governing people. The application of this Golden Rule to governance ensures that the system itself is structured to be the **best offense and defense** against corruption, inequality, and bad faith."
+    },
+    {
+      "linkText": "The Four Principles of Liquid Democracy",
+      "narrativeID": "details-four-principles",
+      "content": "#### 1. Direct Voting (Liquidity)\nEvery citizen retains the **default right to vote directly** on every single issue, bill, or proposal. Unlike traditional representative systems where you surrender your voice to a politician for four years, in Liquid Democracy, your vote is always available to you.\n#### 2. Delegated Authority (Fluidity)\nFor issues you don't have time or expertise for, you can **delegate your vote** to any other participating citizen—a **proxy or delegate**. This creates a meritocracy where influence is earned through trust and demonstrated knowledge.\n#### 3. Instant Revocability (Accountability)\nDelegation is **not permanent**. You can instantly revoke their authority and take your vote back at any time. This instant accountability is the core difference from the current system.\n#### 4. Transitivity (Scalability)\nDelegates can, in turn, delegate the votes they have received to someone else, forming a **chain of delegation**. This allows specialized experts to quickly gain significant influence on highly technical matters."
+    },
+    {
+      "linkText": "FAQ: Common Objections",
+      "narrativeID": "details-faq",
+      "content": "### Q1: Won't experts just take over, becoming a new kind of elite?\nA: The system is designed specifically to prevent this. In Liquid Democracy, delegation is **instantly revocable**. If a delegate betrays the trust, their power evaporates immediately, preventing the formation of rigid, unaccountable elites.\n\n### Q2: Won't people just delegate their vote and never participate?\nA: Liquid Democracy gives people two valuable options: 1. **Focus:** Vote directly on the handful of issues they truly care about. 2. **Impact:** Delegate their vote on complex issues to a trusted expert. This increases overall engagement by making participation meaningful and flexible.\n\n### Q3: How do you prevent identity fraud and ensure \"One Citizen, One Vote\"?\nA: The entire system relies on a **Secure Digital ID (SDID)** tied to verified government records. The system uses decentralized ledger technology (DLT/blockchain) for all record-keeping, making the history of delegations and votes transparent and impossible to tamper with after the fact."
+    },
+    {
+      "linkText": "White Paper on Implementation",
+      "narrativeID": "details-whitepaper",
+      "content": "### I. The Technical Backbone: Decentralized Trust\nThe implementation relies on a **robust, auditable, and decentralized architecture**.\n* **Core Technology: Decentralized Ledger Technology (DLT):** All delegation chains and final votes must be recorded on a DLT/Blockchain, providing Transparency, Immutability, and Auditability.\n* **Digital Identity and Security:** Every participant requires a **Secure Digital ID (SDID)** tied to validated voter registration records for One Citizen, One Vote (or Delegation) and Self-Sovereign Identity (SSI).\n\n### II. The Visionary Possibilities: Future Governance\n* **Dynamic Expertise and Policy:** The system can evolve to use **AI/ML models** for **Delegate Discovery** (recommending specialized experts) and **Informed Synthesis** (aggregating delegate votes to display consensus of expertise).\n* **Civic Economy and Incentivization:** Long-term vision includes implementing a **Reputation Score** system and **Micro-Incentives** (tokenized rewards) to foster high-quality engagement."
+    }
+  ],
+  "externalLink": {
+    "linkText": "Community Forum",
+    "URL": "https://nextdoor.com/g/zm4ryd8nn/",
+    "notes": "This is an external hyperlink that opens a new tab."
+  }
+}

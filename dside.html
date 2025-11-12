@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Engagement Dialog 13</title>
+<style>
+    body {
+        background-color: #121212;
+        color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        border: 10px solid gold;
+        min-height: 100vh;
+    }
+
+    /* --- LAYOUT STYLES --- */
+    .header-flex {
+        display: flex;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 18%; 
+        background-color: #1e1e1e;
+        padding: 20px;
+        box-sizing: border-box;
+        border-right: 2px solid gold;
+    }
+    .sidebar.right {
+        border-right: none;
+        border-left: 2px solid gold;
+    }
+
+    .main-content-area {
+        width: 64%; 
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #top-anchor {
+        width: 100%;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    header {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 0;
+        text-align: center;
+        max-width: 100%; 
+    }
+
+    .header-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+
+    /* --- SIDEBAR NAVIGATION STYLES (UPDATED FONT SIZES) --- */
+    .sidebar h4 {
+        color: gold;
+        margin-top: 0;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        font-size: 1.0em; 
+    }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+    .sidebar li {
+        margin-bottom: 10px;
+    }
+    .sidebar a {
+        color: #f5f5f5;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.2s;
+        cursor: pointer;
+        display: block;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 0.8em; 
+    }
+    .sidebar a:hover {
+        color: gold;
+        background-color: #333;
+    }
+
+    /* --- DIALOG AND DETAIL STYLES --- */
+    .dialog-box {
+        max-width: 600px; 
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        width: 100%; 
+    }
+    
+    #detail-section {
+        display: none;
+        max-width: 800px;
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #detail-section h2 {
+        color: gold;
+        border-bottom: 2px solid gold;
+        padding-bottom: 10px;
+    }
+    
+    /* Input/Button/Select styles (Merged from dialog3) */
+    .question {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    input, button, textarea, select {
+        padding: 10px;
+        margin: 5px 0;
+        border: none;
+        border-radius: 4px;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+    input, textarea, select {
+        width: 100%;
+        background: #2c2c2c;
+        color: #fff;
+    }
+    .submit-button {
+        background: darkred;
+        color: gold;
+        border: 2px solid gold;
+    }
+    .submit-button:hover {
+        background: #990000;
+        color: white;
+    }
+    button {
+        width: auto;
+        padding: 10px 20px;
+        display: inline-block;
+        margin-right: 10px;
+        background: gold;
+        color: #121212;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    textarea {
+        min-height: 100px;
+        max-height: 200px;
+        resize: vertical;
+        font-size: 1.1em;
+    }
+    button:hover {
+        background: #ffd700;
+    }
+    .summary input {
+        width: 90%;
+        margin-bottom: 8px;
+    }
+    ol {
+        margin-left: 20px;
+        color: #ffd700;
+    }
+    ol li {
+        color: #f5f5f5;
+        margin-bottom: 6px;
+    }
+    .char-count {
+        text-align: right;
+        font-size: 0.95em;
+        color: #ffd700;
+        margin-bottom: 5px;
+    }
+    .category-label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="header-flex">
+    <div class="sidebar left">
+        <h4 id="left-sidebar-title"></h4>
+        <ul id="left-sidebar-links"></ul>
+    </div>
+
+    <div class="main-content-area">
+        <div id="top-anchor">
+            <header>
+                <img class="header-image" src="PeoplesBranch.png" alt="Empowering The Peoples Branch - Civic Engagement">
+            </header>
+            
+            <div class="dialog-box">
+                <div id="dialog"></div>
+            </div>
+        </div>
+
+        <div id="detail-section">
+            <div id="narrative-content">
+                </div>
+            <button onclick="hideNarrative()">Return to Dialog</button>
+        </div>
+    </div>
+
+    <div class="sidebar right">
+        <h4 id="right-sidebar-title"></h4>
+        <ul id="right-sidebar-links"></ul>
+    </div>
+</div>
+
+<script>
+    // --- (JAVASCRIPT FUNCTIONS) ---
+
+    // ----------------------------------------------------
+    // START: Dynamic Sidebar Content (External Fetch)
+    // The data is now loaded from external JSON files.
+    // ----------------------------------------------------
+    
+    // Helper function to fetch and parse JSON data
+    async function fetchJsonData(url) {
+        const response = await fetch(url);
+        if (!response.ok) {
+            // Check for file:// protocol failure (common when running locally)
+            if (response.status === 0 && url.startsWith('file://')) {
+                 throw new Error(`File load failed. Check your browser's Developer Console (F12) for security errors related to local file loading (CORS or file:// protocol).`);
+            }
+            throw new Error(`HTTP error! Status: ${response.status} for ${url}`);
+        }
+        return response.json();
+    }
+
+
+    async function loadSidebars() {
+        console.log("loadSidebars() running... Attempting to fetch external files.");
+        
+        const narrativeContent = document.getElementById('narrative-content');
+        const leftLinksContainer = document.getElementById('left-sidebar-links');
+        const rightLinksContainer = document.getElementById('right-sidebar-links');
+
+        let leftSidebarData, rightSidebarData;
+
+        try {
+            // --- 1. FETCH DATA ASYNCHRONOUSLY ---
+            [leftSidebarData, rightSidebarData] = await Promise.all([
+                fetchJsonData('left sidebar.json'),
+                fetchJsonData('right sidebar.json') 
+            ]);
+
+            console.log("Data fetched successfully. Building sidebars.");
+
+        } catch (error) {
+            console.error("CRITICAL ERROR: Failed to load external JSON files.", error);
+            // Fallback for user experience, directing them to the fix
+            document.getElementById('dialog').innerHTML = `
+                <h2 style="color:red;">Setup Error 🔴</h2>
+                <p>Could not load external sidebar data (JSON files). This usually happens due to **browser security restrictions** when opening files directly from your PC (using the 'file://' protocol).</p>
+                <p><strong>Workaround:</strong> You must either run this file using a simple local web server (e.g., Python's SimpleHTTPServer) or upload it to a web host.</p>
+                <p><strong>File Check:</strong> Ensure you have **'left sidebar.json'** and **'right sidebar.json'** in the same folder as this HTML file.</p>
+            `;
+            // Crucial: Stop execution if data is not loaded
+            return;
+        }
+
+        // --- 2. CLEAR CONTAINERS (If content was found, proceed with building) ---
+        leftLinksContainer.innerHTML = '';
+        rightLinksContainer.innerHTML = '';
+        narrativeContent.innerHTML = '';
+
+        // --- 3. BUILD LEFT SIDEBAR (The Peoples Branch) ---
+        document.getElementById('left-sidebar-title').textContent = leftSidebarData.sidebarTitle;
+        
+        // Load Narrative Links & Content
+        leftSidebarData.narrativeLinks.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `<a onclick="showNarrative('${item.narrativeID}')">${item.linkText}</a>`;
+            leftLinksContainer.appendChild(li);
+            
+            // Inject Narrative Content
+            narrativeContent.innerHTML += `<div id="${item.narrativeID}" style="display: none;">${item.content}</div>`;
+        });
+        
+        // Load Action Link ("Join the Movement")
+        if (leftSidebarData.actionLink) {
+            const li = document.createElement('li');
+            li.innerHTML = `<a onclick="${leftSidebarData.actionLink.action}">${leftSidebarData.actionLink.linkText}</a>`;
+            leftLinksContainer.appendChild(li);
+        }
+
+        // --- 4. BUILD RIGHT SIDEBAR (Related Resources) ---
+        document.getElementById('right-sidebar-title').textContent = rightSidebarData.sidebarTitle;
+        
+        // Load Narrative Links & Content
+        rightSidebarData.narrativeLinks.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `<a onclick="showNarrative('${item.narrativeID}')">${item.linkText}</a>`;
+            rightLinksContainer.appendChild(li);
+
+            // Inject Narrative Content
+            narrativeContent.innerHTML += `<div id="${item.narrativeID}" style="display: none;">${item.content}</div>`;
+        });
+        
+        // Load External Link ("Community Forum")
+        if (rightSidebarData.externalLink) {
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="${rightSidebarData.externalLink.URL}" target="_blank">${rightSidebarData.externalLink.linkText}</a>`;
+            rightLinksContainer.appendChild(li);
+        }
+
+        console.log(`Sidebars built successfully. Left links: ${leftLinksContainer.children.length}. Right links: ${rightLinksContainer.children.length}.`);
+    }
+    // ----------------------------------------------------
+    // END: Dynamic Sidebar Content
+    // ----------------------------------------------------
+
+    function generateUUID() {
+        // RFC4122 version 4 compliant UUID
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11)
+            .replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+    }
+
+    const dialog = document.getElementById('dialog');
+    
+    // userData structure is updated to include isSent status logic and jurisdictionLevel
+    const userData = JSON.parse(localStorage.getItem('civicUser')) || {
+        civicId: generateUUID(),
+        town: '',
+        state: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        referral: '',
+        concerns: [] // Stores objects: { category: '...', text: '...', isSent: false, jurisdictionLevel: '...' }
+    };
+
+    if (!userData.civicId) {
+        userData.civicId = generateUUID();
+        localStorage.setItem('civicUser', JSON.stringify(userData));
+    }
+    
+    if (typeof userData.lastName === 'undefined') userData.lastName = '';
+
+    function saveData() {
+        localStorage.setItem('civicUser', JSON.stringify(userData));
+    }
+
+    // --- Data Migration Logic (Handle older local storage versions) ---
+    function migrateDataStructure() {
+        let needsSave = false;
+        
+        if (!Array.isArray(userData.concerns)) {
+            userData.concerns = [];
+            needsSave = true;
+        }
+
+        userData.concerns = userData.concerns.map(c => {
+            if (typeof c === 'string' && c.trim()) {
+                needsSave = true;
+                return { category: 'opinion/comment', text: c.trim(), isSent: false, jurisdictionLevel: 'UNKNOWN' };
+            }
+            
+            if (typeof c === 'object' && c !== null) {
+                if (typeof c.isSent === 'undefined') {
+                    c.isSent = false;
+                    needsSave = true;
+                }
+                // *** ENSURE jurisdictionLevel FIELD IS PRESENT ***
+                if (typeof c.jurisdictionLevel === 'undefined') {
+                    c.jurisdictionLevel = 'UNKNOWN'; // Default value for old records
+                    needsSave = true;
+                }
+            }
+            
+            return (typeof c === 'object' && c !== null && c.text) ? c : null;
+        }).filter(c => c);
+        
+        if (needsSave) {
+            saveData();
+            console.log("Local storage migrated to Audited Submission Model (V1.0 with Jurisdiction).");
+        }
+    }
+    
+    migrateDataStructure(); 
+    
+    // Helper function to check if the minimum required data for submission is present
+    function checkSubmissionEligibility() {
+        const hasLocation = userData.town && userData.state;
+        const hasContact = userData.email || userData.phone; 
+        const hasNewConcerns = userData.concerns.some(c => c.isSent === false);
+        return hasLocation && hasContact && hasNewConcerns;
+    }
+
+    function showQuestion(text, inputType = 'text', callback) {
+        dialog.innerHTML = `
+            <div class="question">${text}</div>
+            ${inputType === 'textarea' ? `
+                <div class="char-count" id="charCount">0/500</div>
+                <textarea id="answer" maxlength="500"></textarea>
+            ` : inputType ? `<input type="${inputType}" id="answer">` : ''}
+            <button onclick="handleAnswer()">Save</button>
+            <button onclick="skipAnswer()">Skip</button>
+        `;
+        if (inputType === 'textarea') {
+            const textarea = document.getElementById('answer');
+            const charCount = document.getElementById('charCount');
+            textarea.addEventListener('input', function() {
+                charCount.textContent = `${textarea.value.length}/500`;
+            });
+        }
+        window.handleAnswer = () => {
+            const val = document.getElementById('answer')?.value.trim();
+            callback(val);
+        };
+        window.skipAnswer = () => {
+            callback('');
+        };
+    }
+    
+    // FUNCTION: Capturing Categorized Intent (Civic DNA) - MODIFIED FOR JURISDICTION
+    function showConcernInput() {
+        const categories = ["idea", "wish", "concern", "top-priority", "demand", "opinion/comment"];
+        const jurisdictions = ["Local", "State", "Federal"]; // NEW JURISDICTION OPTIONS
+
+        let categoryOptionsHtml = categories.map(cat => {
+            let label = cat.charAt(0).toUpperCase() + cat.slice(1);
+            if (cat === 'opinion/comment') {
+                label = 'Opinion/Comment';
+            } else if (cat === 'top-priority') {
+                label = 'Top-Priority';
+            }
+            return `<option value="${cat}">${label}</option>`;
+        }).join('');
+        
+        // NEW JURISDICTION DROPDOWN HTML
+        let jurisdictionOptionsHtml = jurisdictions.map(level => {
+            return `<option value="${level.toUpperCase()}">${level}</option>`;
+        }).join('');
+
+
+        dialog.innerHTML = `
+            <div class="question">Categorize your intent and select the appropriate jurisdiction:</div>
+            
+            <label style="display:block; margin-top:10px;">**Intent Category:**</label>
+            <select id="category-dropdown" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                ${categoryOptionsHtml}
+            </select>
+            
+            <label style="display:block; margin-top:10px;">**Target Jurisdiction:**</label>
+            <select id="jurisdiction-dropdown" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                ${jurisdictionOptionsHtml}
+            </select>
+
+            <div class="question" style="margin-top:20px;">State your civic concern (up to 500 characters):</div>
+            <div class="char-count" id="charCount">0/500</div>
+            <textarea id="concern-text" maxlength="500" placeholder="Describe your concern or idea here..."></textarea>
+            <button onclick="handleConcernSubmit()">Save</button>
+            <button onclick="skipConcernSubmit()">Skip</button>
+        `;
+
+        const textarea = document.getElementById('concern-text');
+        const charCount = document.getElementById('charCount');
+        textarea.addEventListener('input', function() {
+            charCount.textContent = `${textarea.value.length}/500`;
+        });
+
+        window.handleConcernSubmit = () => {
+            const category = document.getElementById('category-dropdown').value;
+            const jurisdiction = document.getElementById('jurisdiction-dropdown').value;
+            const text = document.getElementById('concern-text').value.trim();
+            
+            if (text) {
+                // *** UPDATED: Add jurisdictionLevel field to the intent object ***
+                userData.concerns.push({ 
+                    category: category, 
+                    text: text, 
+                    isSent: false,
+                    jurisdictionLevel: jurisdiction // Saves as LOCAL, STATE, or FEDERAL
+                });
+            }
+            saveData();
+            showSummary();
+        };
+        
+        window.skipConcernSubmit = () => {
+            showSummary(); 
+        };
+    }
+
+
+    function askForGPS() {
+        dialog.innerHTML = `
+            <div class="question">Would you like to use GPS to auto-detect your town and state?</div>
+            <button onclick="getGPSLocation()">Yes</button>
+            <button onclick="manualLocation()">No</button>
+        `;
+    }
+
+    function getGPSLocation() {
+        dialog.innerHTML = `<div class="question">Detecting your location...</div>`;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                // Use OpenStreetMap Nominatim API for reverse geocoding
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let town = data.address.town || data.address.city || data.address.village || '';
+                        let state = data.address.state || data.address.region || '';
+                        if (town && state) {
+                            userData.town = town;
+                            userData.state = state;
+                            saveData();
+                            dialog.innerHTML = `
+                                <div class="question">Your detected town is: <b>${town}</b><br>Your detected state is: <b>${state}</b><br>Is this correct?</div>
+                                <button onclick="confirmLocation(true)">Yes</button>
+                                <button onclick="confirmLocation(false)">No</button>
+                            `;
+                        } else {
+                            dialog.innerHTML = `<p>Could not determine town/state from GPS. Please enter manually.</p>`;
+                            manualLocation();
+                        }
+                    })
+                    .catch(() => {
+                        dialog.innerHTML = `<p>Reverse geocoding failed. Please enter your town and state manually.</p>`;
+                        manualLocation();
+                    });
+            }, function(error) {
+                dialog.innerHTML = `<p>Unable to access GPS. Please enter your town and state manually.</p>`;
+                manualLocation();
+            });
+        } else {
+            dialog.innerHTML = `<p>GPS not supported. Please enter your town and state manually.</p>`;
+            manualLocation();
+        }
+    }
+
+    function confirmLocation(isCorrect) {
+        if (isCorrect) {
+            saveData();
+            askMissingFields();
+        } else {
+            manualLocation();
+        }
+    }
+
+    function manualLocation() {
+        showQuestion('Enter your town and state (e.g., Putnam, CT):', 'text', (val) => {
+            if (val) {
+                const parts = val.split(',').map(s => s.trim());
+                const town = parts[0] || '';
+                const state = parts.length > 1 ? parts.slice(1).join(', ') : '';
+
+                if (town && state) {
+                    userData.town = town;
+                    userData.state = state;
+                    saveData();
+                    askMissingFields();
+                } else {
+                    dialog.innerHTML = `<p>We can’t proceed without verification of your town and state.</p>`;
+                }
+            } else {
+                dialog.innerHTML = `<p>We can’t proceed without verification of your town and state.</p>`;
+            }
+        });
+    }
+
+    function startDialog() {
+        window.scrollTo(0, 0); 
+        
+        // Ensure sidebars are loaded before dialog content
+        // The sidebars are now loaded asynchronously, so we only need to call the function once.
+        // The function will call askForGPS() or the next step after loading.
+
+        const greetingName = userData.firstName ? userData.firstName : 'Anonymous';
+        const greeting = `Welcome back, ${greetingName}!`;
+        
+        let lastConcernText = 'None yet';
+        if (userData.concerns.length > 0) {
+            const lastConcern = userData.concerns.slice(-1)[0];
+            const status = lastConcern.isSent ? ' (Sent)' : ' (Un-sent)';
+            const jurisdiction = lastConcern.jurisdictionLevel || 'UNKNOWN';
+            lastConcernText = `[${jurisdiction} ${lastConcern.category ? lastConcern.category.toUpperCase() : ''}] ${lastConcern.text || 'Uncategorized concern'}${status}`;
+        }
+
+        dialog.innerHTML = `
+            <div class="question">${greeting}</div>
+            <p>Your verified location: ${userData.town || 'N/A'}, ${userData.state || 'N/A'}</p>
+            <p>Your Civic ID: <b>${userData.civicId}</b></p>
+            <p>Last intent: ${lastConcernText}</p>
+            <button onclick="askMissingFields()">Continue</button>
+        `;
+        if (!(userData.town && userData.state && userData.civicId)) {
+            askForGPS();
+        }
+    }
+
+    function askMissingFields() {
+        const fields = [
+            { key: 'firstName', label: 'Enter your first name (optional):' },
+            { key: 'lastName', label: 'Enter your last name (optional):' },
+            { key: 'email', label: 'Enter your email (optional, REQUIRED for submission):' },
+            { key: 'phone', label: 'Enter your phone number (optional, REQUIRED for submission):' },
+            { key: 'referral', label: 'Enter referral email (optional):' }
+        ];
+
+        const missing = fields.filter(f => !userData[f.key]);
+        if (missing.length === 0) {
+            saveData();
+            showConcernInput(); 
+            return;
+        }
+
+        let index = 0;
+        function nextField() {
+            if (index >= missing.length) {
+                saveData();
+                showConcernInput(); 
+                return;
+            }
+            const field = missing[index];
+            showQuestion(field.label, 'text', (val) => {
+                if (val) userData[field.key] = val;
+                saveData();
+                index++;
+                nextField();
+            });
+        }
+        nextField();
+    }
+
+    function submitApplication() {
+        
+        const newConcerns = userData.concerns.filter(c => c.isSent === false);
+
+        if (newConcerns.length === 0) {
+            dialog.innerHTML = `<h2>No New Data</h2><p>You have already submitted all of your current Civic DNA. Add a new intent to submit an update.</p><button onclick="showSummary()">Return to Summary</button>`;
+            return;
+        }
+
+        let categoryText = 'NEW Civic DNA'; 
+        if (newConcerns.length > 0) {
+            const categories = [...new Set(newConcerns.map(c => c.category))];
+            
+            const formatCategory = (c) => {
+                if (c === 'opinion/comment') return 'Opinion/Comment';
+                if (c === 'top-priority') return 'Top-Priority';
+                return c.charAt(0).toUpperCase() + c.slice(1);
+            };
+
+            if (categories.length === 1) {
+                categoryText = formatCategory(categories[0]).toUpperCase();
+            } else {
+                const formattedCategories = categories.map(formatCategory);
+                categoryText = formattedCategories.join(', ') + ' Intents';
+            }
+        }
+
+        // 2. Prepare payload (includes all user data fields)
+        const payload = {
+            civicId: userData.civicId,
+            town: userData.town,
+            state: userData.state,
+            firstName: userData.firstName || undefined, 
+            lastName: userData.lastName || undefined,
+            email: userData.email || undefined,
+            phone: userData.phone || undefined,
+            referral: userData.referral || undefined,
+            submissionDate: new Date().toISOString(),
+            newConcerns: newConcerns // This array now includes the jurisdictionLevel field
+        };
+        
+        const applicationData = JSON.stringify(payload, null, 2); 
+        
+        // JSON DOWNLOAD LOGIC
+        const blob = new Blob([applicationData], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        const cleanTown = userData.town.replace(/\s/g, '_');
+        a.download = `Civic_DNA_Update_${cleanTown}_${userData.civicId.substring(0, 8)}.json`;
+        
+        document.body.appendChild(a); 
+        a.click();
+        document.body.removeChild(a); 
+
+        // FLAG as SENT and Save (CRUCIAL STEP for Auditing)
+        userData.concerns.forEach(c => {
+            if (c.isSent === false) {
+                c.isSent = true;
+            }
+        });
+        saveData();
+
+        // Final Confirmation
+        dialog.innerHTML = `
+            <h2>Download Complete!</h2>
+            <p>Thank yourself, **${userData.firstName || 'Applicant'}**!</p>
+            <p>Your **${newConcerns.length} selected ${categoryText} item(s)** have been successfully saved to your PC as a **.json** file.</p>
+            <p>Please locate the file: **${a.download}** and submit it to the Local Delegation Council for processing.</p>
+            <button onclick="startDialog()">Return to Home</button>
+        `;
+    }
+
+    function showSummary() {
+        window.scrollTo(0, 0); 
+        
+        let concernsList = '';
+        if (userData.concerns.length > 0) {
+            concernsList = '<ol>';
+            userData.concerns.forEach(c => {
+                const category = c.category ? c.category.toUpperCase() : 'UNCATEGORIZED';
+                const jurisdiction = c.jurisdictionLevel || 'UNKNOWN'; // Retrieve new field
+                const text = c.text || 'No text provided';
+                const status = c.isSent ? ' (SENT)' : ' (UN-SENT)';
+                const statusColor = c.isSent ? 'lightgray' : 'gold'; 
+                
+                concernsList += `<li><span class="category-label" style="color:${statusColor}">[${jurisdiction} ${category}]</span>${text}${status}</li>`;
+            });
+            concernsList += '</ol>';
+        } else {
+            concernsList = '<p>(No concerns submitted yet. Please add intent before finalizing.)</p>';
+        }
+
+        const isEligible = checkSubmissionEligibility();
+        let submitButton = '';
+        
+        if (isEligible) {
+            submitButton = `<button class="submit-button" onclick="submitApplication()">Download NEW Civic DNA File</button>`;
+        } else {
+            const hasContact = userData.email || userData.phone; 
+            const hasNewConcerns = userData.concerns.some(c => c.isSent === false);
+            
+            let reason = [];
+            if (!hasContact) reason.push('Contact (Email/Phone)');
+            if (!hasNewConcerns) reason.push('New Intents to Submit');
+            
+            submitButton = `<p style="color:red; font-weight:bold;">Submission Blocked: Missing ${reason.join(' and ')}.</p>`;
+        }
+
+        dialog.innerHTML = `
+            <p><strong>Review and Edit Your Details:</strong></p>
+            <div class="summary">
+                <label>Civic ID: ${userData.civicId}</label><br>
+                <label>Location: ${userData.town}, ${userData.state}</label><br>
+                <input id="firstName" placeholder="First Name" value="${userData.firstName}">
+                <input id="lastName" placeholder="Last Name" value="${userData.lastName}">
+                <input id="email" placeholder="Email (Required)" value="${userData.email}">
+                <input id="phone" placeholder="Phone (Required)" value="${userData.phone}">
+                <input id="referral" placeholder="Referral Email" value="${userData.referral}">
+            </div>
+            <p><strong>Civic DNA (Intent) History:</strong></p>
+            ${concernsList}
+            <button onclick="saveEdits()">Save Changes</button>
+            <button onclick="showConcernInput()">Add New Intent</button>
+            <button onclick="startDialog()">Start Over</button>
+            <hr style="border-top: 1px solid gold; margin: 20px 0;">
+            ${submitButton}
+        `;
+    }
+
+    function saveEdits() {
+        userData.firstName = document.getElementById('firstName').value.trim();
+        userData.lastName = document.getElementById('lastName').value.trim();
+        userData.email = document.getElementById('email').value.trim();
+        userData.phone = document.getElementById('phone').value.trim();
+        userData.referral = document.getElementById('referral').value.trim();
+        saveData();
+        dialog.innerHTML = `<p>Changes saved successfully!</p><button onclick="showSummary()">Return to Summary</button>`;
+    }
+
+    // --- JAVASCRIPT FUNCTIONS FOR NARRATIVE VIEW ---
+
+    function showNarrative(narrativeId) {
+        window.scrollTo(0, 0); 
+        
+        document.getElementById('top-anchor').style.display = 'none';
+        document.getElementById('detail-section').style.display = 'block';
+
+        const narrativeContents = document.querySelectorAll('#narrative-content > div');
+        narrativeContents.forEach(div => {
+            div.style.display = 'none';
+        });
+
+        document.getElementById(narrativeId).style.display = 'block';
+    }
+
+    function hideNarrative() {
+        window.scrollTo(0, 0); 
+        
+        document.getElementById('detail-section').style.display = 'none';
+        document.getElementById('top-anchor').style.display = 'flex'; 
+    }
+
+    // Load sidebars immediately and then start the dialog
+    loadSidebars().then(() => {
+        // Only start the dialog if the sidebars were successfully loaded
+        // If loadSidebars failed, it printed an error and returned early.
+        // We check if the dialog is still showing the initial start button
+        // before attempting to start the main logic.
+        if (!document.getElementById('dialog').innerHTML.includes('Setup Error')) {
+            startDialog();
+        }
+    });
+
+</script>
+</body>
+</html>

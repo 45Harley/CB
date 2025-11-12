@@ -1,0 +1,25 @@
+{
+  "sidebarTitle": "The Peoples Branch",
+  "narrativeLinks": [
+    {
+      "linkText": "Representative Government: A Necessary Past",
+      "narrativeID": "details-obsolete",
+      "content": "The **Representative System**, while revolutionary for its time, was a practical necessity born of the limits of distance and communication. It was the only way to govern vast, geographically spread populations in a pre-digital age. Today, this system has become a **bottleneck to progress**. Representatives are often beholden to special interests or rigid party lines, rather than the true will of their diverse constituents. They are tasked with making decisions on hundreds of complex issues—from nuclear energy to healthcare—lacking true expertise in most, and are only held directly accountable every few years. In the 21st century, with instant information and ubiquitous connectivity, relying on a handful of individuals to speak for millions is not true democracy; it is an **obsolete mechanism**. We must evolve the structure of governance to match our technological capability for widespread, informed participation."
+    },
+    {
+      "linkText": "Liquid Democracy: The Mechanism of Change",
+      "narrativeID": "details-liquid",
+      "content": "**Liquid Democracy** is the essential **evolutionary bridge** from our obsolete representative system to the ideal of Pure Democracy. This modern hybrid system uses technology to embody the Golden Rule in civic action and is built on the four core principles. We invite you to join **The Peoples Branch Community Forum** (link in the sidebar) and participate in discussions, such as the **'Liquid and Pure Democracy'** thread, to help define the practical application of these principles at the local level and beyond."
+    },
+    {
+      "linkText": "Pure Democracy: The Ideal People's Branch",
+      "narrativeID": "details-pure",
+      "content": "**Pure Democracy** is the ultimate goal: a system where every citizen is a fully informed, active, and responsible participant in governance. It is not simply a voting mechanism, but a societal structure built on trust, transparency, and universal participation, achieved through iterative progress. In our current stage, Pure Democracy is best defined as a **community effort** that evolves through platforms like our online forum. The goal is to build the capacity for pure self-governance from the ground up by fostering: **Deep Civic Participation:** Encouraging consistent, informed involvement in local decision-making. **Local Leadership Identification:** Using the forum to identify and vet individuals who demonstrate the necessary knowledge and commitment to become trusted Liquid Democracy delegates (future town leads). **Volunteer Mobilization:** Creating a reliable source of engaged citizens willing to dedicate time and resources to community action, effectively replacing the need for external political management. By empowering the local community to solve its own problems and organize its own expertise, the need for career politicians and rigid representation slowly fades, moving us closer to the ideal of true, pure democracy."
+    }
+  ],
+  "actionLink": {
+    "linkText": "Join the Movement",
+    "action": "hideNarrative(); startDialog();",
+    "notes": "This link triggers the main application dialog and does not display a static narrative panel."
+  }
+}

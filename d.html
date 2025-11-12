@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Engagement Dialog</title>
+<style>
+    body {
+        background-color: #121212;
+        color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        border: 10px solid gold;
+        min-height: 100vh;
+    }
+
+    /* --- LAYOUT STYLES --- */
+    .header-flex {
+        display: flex;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 18%; 
+        background-color: #1e1e1e;
+        padding: 20px;
+        box-sizing: border-box;
+        border-right: 2px solid gold;
+    }
+    .sidebar.right {
+        border-right: none;
+        border-left: 2px solid gold;
+    }
+
+    .main-content-area {
+        width: 64%; 
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #top-anchor {
+        width: 100%;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    header {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 0;
+        text-align: center;
+        max-width: 100%; 
+    }
+
+    .header-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+
+    /* --- SIDEBAR NAVIGATION STYLES (UPDATED FONT SIZES) --- */
+    .sidebar h4 {
+        color: gold;
+        margin-top: 0;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        font-size: 1.0em; 
+    }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+    .sidebar li {
+        margin-bottom: 10px;
+    }
+    .sidebar a {
+        color: #f5f5f5;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.2s;
+        cursor: pointer;
+        display: block;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 0.8em; 
+    }
+    .sidebar a:hover {
+        color: gold;
+        background-color: #333;
+    }
+
+    /* --- DIALOG AND DETAIL STYLES --- */
+    .dialog-box {
+        max-width: 600px; 
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        width: 100%; 
+    }
+    
+    #detail-section {
+        display: none;
+        max-width: 800px;
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #detail-section h2 {
+        color: gold;
+        border-bottom: 2px solid gold;
+        padding-bottom: 10px;
+    }
+    
+    /* Input/Button/Select styles (Merged from dialog3) */
+    .question {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    input, button, textarea, select {
+        padding: 10px;
+        margin: 5px 0;
+        border: none;
+        border-radius: 4px;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+    input, textarea, select {
+        width: 100%;
+        background: #2c2c2c;
+        color: #fff;
+    }
+    .submit-button {
+        background: darkred;
+        color: gold;
+        border: 2px solid gold;
+    }
+    .submit-button:hover {
+        background: #990000;
+        color: white;
+    }
+    button {
+        width: auto;
+        padding: 10px 20px;
+        display: inline-block;
+        margin-right: 10px;
+        background: gold;
+        color: #121212;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    textarea {
+        min-height: 100px;
+        max-height: 200px;
+        resize: vertical;
+        font-size: 1.1em;
+    }
+    button:hover {
+        background: #ffd700;
+    }
+    .summary input {
+        width: 90%;
+        margin-bottom: 8px;
+    }
+    ol {
+        margin-left: 20px;
+        color: #ffd700;
+    }
+    ol li {
+        color: #f5f5f5;
+        margin-bottom: 6px;
+    }
+    .char-count {
+        text-align: right;
+        font-size: 0.95em;
+        color: #ffd700;
+        margin-bottom: 5px;
+    }
+    .category-label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="header-flex">
+    <div class="sidebar left">
+        <h4>The Peoples Branch</h4>
+        <ul>
+            <li><a onclick="showNarrative('details-obsolete')">Representative Government: A Necessary Past</a></li>
+            <li><a onclick="showNarrative('details-liquid')">Liquid Democracy: The Mechanism of Change</a></li>
+            <li><a onclick="showNarrative('details-pure')">Pure Democracy: The Ideal People's Branch</a></li>
+            <li><a onclick="hideNarrative(); startDialog();">Join the Movement</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content-area">
+        <div id="top-anchor">
+            <header>
+                <img class="header-image" src="PeoplesBranch.png" alt="Empowering The Peoples Branch - Civic Engagement">
+            </header>
+            
+            <div class="dialog-box">
+                <div id="dialog"></div>
+            </div>
+        </div>
+
+        <div id="detail-section">
+            <div id="narrative-content">
+                <div id="details-obsolete" style="display: none;">
+                    <h2>Representative Government: A Necessary Past</h2>
+                    <p>The **Representative System**, while revolutionary for its time, was a practical necessity born of the limits of distance and communication. It was the only way to govern vast, geographically spread populations in a pre-digital age.</p>
+                    <p>Today, this system has become a **bottleneck to progress**. Representatives are often beholden to special interests or rigid party lines, rather than the true will of their diverse constituents. They are tasked with making decisions on hundreds of complex issues—from nuclear energy to healthcare—lacking true expertise in most, and are only held directly accountable every few years.</p>
+                    <p>In the 21st century, with instant information and ubiquitous connectivity, relying on a handful of individuals to speak for millions is not true democracy; it is an **obsolete mechanism**. We must evolve the structure of governance to match our technological capability for widespread, informed participation.</p>
+                </div>
+                
+                <div id="details-ethical-core" style="display: none;">
+                    <h2>The Core Principles: The Ethical Foundation</h2>
+                    <p>The **Core Principles** of our governance model are founded on a universal ethical command: **The Golden Rule**.</p>
+                    
+                    <h3>The Ethical Foundation: The Golden Rule</h3>
+                    <p>Across all major world philosophies and religions—from Christianity, Judaism, and Islam to Buddhism, Hinduism, and Confucianism—there is one common ethical command: **The Golden Rule**. Whether stated as, "Do to others what you would have them do to you," or "Hurt not others in ways that you yourself would find hurtful," this principle establishes the required standard for a self-governing people.</p>
+                    <p>The application of this Golden Rule to governance ensures that the system itself is structured to be the **best offense and defense** against corruption, inequality, and bad faith.</p>
+                </div>
+
+                <div id="details-four-principles" style="display: none;">
+                    <h2>The Four Core Principles of Liquid Democracy</h2>
+                    
+                    <h4>1. Direct Voting (Liquidity)</h4>
+                    <p>Every citizen retains the **default right to vote directly** on every single issue, bill, or proposal. Unlike traditional representative systems where you surrender your voice to a politician for four years, in Liquid Democracy, your vote is always available to you. You can choose to use it on the matters you care about most, maintaining ultimate control.</p>
+
+                    <h4>2. Delegated Authority (Fluidity)</h4>
+                    <p>For issues you don't have time or expertise for (e.g., complex tax law or deep science policy), you can **delegate your vote** to any other participating citizen—a **proxy or delegate**. You might delegate your environmental vote to a local conservation expert, and your education vote to a retired teacher. This creates a meritocracy where influence is earned through trust and demonstrated knowledge, not campaign funding.</p>
+
+                    <h4>3. Instant Revocability (Accountability)</h4>
+                    <p>Delegation is **not permanent**. If your chosen delegate votes in a way you disagree with, or if your circumstances change, you can instantly revoke their authority and take your vote back at any time. This instant accountability is the core difference from the current system, forcing delegates to constantly represent the genuine interests of those who entrusted them.</p>
+
+                    <h4>4. Transitivity (Scalability)</h4>
+                    <p>Delegates can, in turn, delegate the votes they have received to someone else, forming a **chain of delegation**. This allows specialized experts to quickly gain significant influence on highly technical matters, creating a flexible, self-organizing hierarchy of expertise that scales from the local community to the national level without relying on professional politicians.</p>
+
+                </div>
+
+                <div id="details-liquid" style="display: none;">
+                    <h2>Liquid Democracy: The Mechanism of Change</h2>
+
+                    <h3>The Evolutionary Mechanism: Liquid Democracy</h3>
+                    <p>**Liquid Democracy** is the essential **evolutionary bridge** from our obsolete representative system to the ideal of Pure Democracy. This modern hybrid system uses technology to embody the Golden Rule in civic action and is built on the four core principles.</p>
+                    <p>We invite you to join **The Peoples Branch Community Forum** (link in the sidebar) and participate in discussions, such as the **'Liquid and Pure Democracy'** thread, to help define the practical application of these principles at the local level and beyond. </p>
+                </div>
+                
+                <div id="details-pure" style="display: none;">
+                    <h2>Pure Democracy: The Ideal People's Branch</h2>
+                    <p>**Pure Democracy** is the ultimate goal: a system where every citizen is a fully informed, active, and responsible participant in governance. It is not simply a voting mechanism, but a societal structure built on trust, transparency, and universal participation, achieved through iterative progress.</p>
+
+                    <h3>Evolving the Ideal Locally</h3>
+                    <p>In our current stage, Pure Democracy is best defined as a **community effort** that evolves through platforms like our online forum. The goal is to build the capacity for pure self-governance from the ground up by fostering:</p>
+                    <ul>
+                        <li>**Deep Civic Participation:** Encouraging consistent, informed involvement in local decision-making.</li>
+                        <li>**Local Leadership Identification:** Using the forum to identify and vet individuals who demonstrate the necessary knowledge and commitment to become trusted Liquid Democracy delegates (future town leads).</li>
+                        <li>**Volunteer Mobilization:** Creating a reliable source of engaged citizens willing to dedicate time and resources to community action, effectively replacing the need for external political management.</li>
+                    </ul>
+                    <p>By empowering the local community to solve its own problems and organize its own expertise, the need for career politicians and rigid representation slowly fades, moving us closer to the ideal of true, pure democracy.</p>
+                </div>
+
+                <div id="details-whitepaper" style="display: none;">
+                    <h2>White Paper on Implementation: Technical & Visionary Overview</h2>
+                    
+                    <h3>I. The Technical Backbone: Decentralized Trust</h3>
+                    <p>The implementation of Liquid Democracy relies on a **robust, auditable, and decentralized architecture** to ensure the integrity of votes and delegations.</p>
+                    
+                    <h4>Core Technology: Decentralized Ledger Technology (DLT)</h4>
+                    <p>All delegation chains (who delegates to whom) and final votes must be recorded on a **permissioned or public-permissioned DLT/Blockchain**. This provides:</p>
+                    <ul>
+                        <li>**Transparency:** Every delegation path is publicly verifiable.</li>
+                        <li>**Immutability:** Records cannot be altered, ensuring integrity.</li>
+                        <li>**Auditability:** Instant public review of how any delegate's influence was accrued.</li>
+                    </ul>
+
+                    <h4>Digital Identity and Security</h4>
+                    <p>Every participant requires a **Secure Digital ID (SDID)** tied to validated voter registration records. This SDID is essential for:</p>
+                    <ul>
+                        <li>**One Citizen, One Vote (or Delegation):** Preventing fraud and double-voting/delegating.</li>
+                        <li>**Self-Sovereign Identity (SSI):** Giving the citizen control over their identity and privacy rights, separate from their delegation rights.</li>
+                    </ul>
+
+                    <h3>II. The Visionary Possibilities: Future Governance</h3>
+                    <p>The system is not just a voting mechanism; it is designed to facilitate a continuous, informed democracy that scales globally.</p>
+
+                    <h4>Dynamic Expertise and Policy</h4>
+                    <p>The system can evolve to use **AI/ML models** to assist citizens:</p>
+                    <ol>
+                        <li>**Delegate Discovery:** Analyzing a citizen's past participation, verified professional certifications, or academic history to recommend **specialized subject-matter experts** to delegate to.</li>
+                        <li>**Informed Synthesis:** Aggregating delegate votes and displaying the **consensus of expertise** on complex topics, allowing every citizen to make a decision based on the best available data.</li>
+                    </ol>
+                    
+                    <h4>Civic Economy and Incentivization</h4>
+                    <p>Long-term vision includes implementing micro-incentives or a **Reputation Score** system to foster high-quality engagement:</p>
+                    <ul>
+                        <li>**Reputation Score:** Earned by consistently making informed, non-revoked delegations, or by acting as a delegate who retains a high trust level. This score could grant increased visibility or platform privileges.</li>
+                        <li>**Micro-Incentives:** Tokenized rewards for participation in detailed policy analysis or successful community organization, aligning civic duty with tangible recognition.</li>
+                    </ul>
+                </div>
+
+                <div id="details-faq" style="display: none;">
+                    <h2>FAQ: Common Objections to Liquid Democracy</h2>
+                    
+                    <h3>Q1: Won't experts just take over, becoming a new kind of elite?</h3>
+                    <p>A: The system is designed specifically to prevent this. In a representative system, a politician retains your power for years, regardless of performance. In Liquid Democracy, delegation is **instantly revocable**. If a delegate betrays the trust or votes against the interests of their delegators, their power evaporates immediately, forcing constant accountability and preventing the formation of rigid, unaccountable elites.</p>
+
+                    <h3>Q2: Won't people just delegate their vote and never participate?</h3>
+                    <p>A: Most people don't vote because they feel uninformed or that their single vote doesn't matter. Liquid Democracy solves this by giving people two valuable options:</p>
+                    <ol>
+                        <li>**Focus:** Vote directly on the handful of issues they truly care about.</li>
+                        <li>**Impact:** Delegate their vote on complex issues (like economic policy) to a trusted expert, ensuring their voice still contributes to an informed decision.</li>
+                    </ol>
+                    <p>This increases overall engagement by making participation meaningful and flexible, catering to the realities of modern life.</p>
+
+                    <h3>Q3: How do you prevent identity fraud and ensure "One Citizen, One Vote"?</h3>
+                    <p>A: The entire system relies on a **Secure Digital ID (SDID)**, which must be tied to verified government records (like voter registration or a state ID). The system uses decentralized ledger technology (DLT/blockchain) for all record-keeping, making the history of delegations and votes transparent and impossible to tamper with after the fact. The security is mathematical, not political.</p>
+                </div>
+            </div>
+            <button onclick="hideNarrative()">Return to Dialog</button>
+        </div>
+
+    </div>
+
+    <div class="sidebar right">
+        <h4>Related Resources</h4>
+        <ul>
+            <li><a onclick="showNarrative('details-ethical-core')">Ethical Foundation: The Golden Rule</a></li> 
+            <li><a onclick="showNarrative('details-four-principles')">The Four Principles of Liquid Democracy</a></li>
+            <li><a onclick="showNarrative('details-faq')">FAQ: Common Objections</a></li>
+            <li><a onclick="showNarrative('details-whitepaper')">White Paper on Implementation</a></li>
+            <li><a href="https://nextdoor.com/g/zm4ryd8nn/" target="_blank">Community Forum</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // --- (JAVASCRIPT FUNCTIONS) ---
+    function generateUUID() {
+        // RFC4122 version 4 compliant UUID
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11)
+            .replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+    }
+
+    const dialog = document.getElementById('dialog');
+    
+    // userData structure is updated to include isSent status logic
+    const userData = JSON.parse(localStorage.getItem('civicUser')) || {
+        civicId: generateUUID(),
+        town: '',
+        state: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        referral: '',
+        concerns: [] // Stores objects: { category: '...', text: '...', isSent: false, jurisdictionLevel: '...' }
+    };
+
+    if (!userData.civicId) {
+        userData.civicId = generateUUID();
+        localStorage.setItem('civicUser', JSON.stringify(userData));
+    }
+    
+    if (typeof userData.lastName === 'undefined') userData.lastName = '';
+
+    function saveData() {
+        localStorage.setItem('civicUser', JSON.stringify(userData));
+    }
+
+    // --- Data Migration Logic (Handle older local storage versions) ---
+    function migrateDataStructure() {
+        let needsSave = false;
+        
+        // Ensure concerns is an array
+        if (!Array.isArray(userData.concerns)) {
+            userData.concerns = [];
+            needsSave = true;
+        }
+
+        // Map and clean up old entries
+        userData.concerns = userData.concerns.map(c => {
+            // Case 1: Oldest string format (e.g., concerns: ["string concern"])
+            if (typeof c === 'string' && c.trim()) {
+                needsSave = true;
+                return { category: 'opinion/comment', text: c.trim(), isSent: false, jurisdictionLevel: 'UNKNOWN' };
+            }
+            
+            // Case 2: Data from your prior submission (object without isSent or jurisdictionLevel)
+            if (typeof c === 'object' && c !== null) {
+                if (typeof c.isSent === 'undefined') {
+                    c.isSent = false;
+                    needsSave = true;
+                }
+                // *** NEW MIGRATION: ADD jurisdictionLevel FIELD ***
+                if (typeof c.jurisdictionLevel === 'undefined') {
+                    c.jurisdictionLevel = 'UNKNOWN'; // Default value for old records
+                    needsSave = true;
+                }
+            }
+            
+            // Return only valid objects with text
+            return (typeof c === 'object' && c !== null && c.text) ? c : null;
+        }).filter(c => c); // Filter out any null entries
+        
+        if (needsSave) {
+            saveData();
+            console.log("Local storage migrated to Audited Submission Model (V1.0 with Jurisdiction).");
+        }
+    }
+    
+    // Call the migration function immediately after loading data:
+    migrateDataStructure(); 
+    
+    // Helper function to check if the minimum required data for submission is present
+    function checkSubmissionEligibility() {
+        const hasLocation = userData.town && userData.state;
+        // Requires at least one contact method: email OR phone
+        const hasContact = userData.email || userData.phone; 
+        // Must have at least one UN-SENT concern to submit an update
+        const hasNewConcerns = userData.concerns.some(c => c.isSent === false);
+        return hasLocation && hasContact && hasNewConcerns;
+    }
+
+    function showQuestion(text, inputType = 'text', callback) {
+        dialog.innerHTML = `
+            <div class="question">${text}</div>
+            ${inputType === 'textarea' ? `
+                <div class="char-count" id="charCount">0/500</div>
+                <textarea id="answer" maxlength="500"></textarea>
+            ` : inputType ? `<input type="${inputType}" id="answer">` : ''}
+            <button onclick="handleAnswer()">Save</button>
+            <button onclick="skipAnswer()">Skip</button>
+        `;
+        if (inputType === 'textarea') {
+            const textarea = document.getElementById('answer');
+            const charCount = document.getElementById('charCount');
+            textarea.addEventListener('input', function() {
+                charCount.textContent = `${textarea.value.length}/500`;
+            });
+        }
+        window.handleAnswer = () => {
+            const val = document.getElementById('answer')?.value.trim();
+            callback(val);
+        };
+        window.skipAnswer = () => {
+            callback('');
+        };
+    }
+    
+    // FUNCTION: Capturing Categorized Intent (Civic DNA) - MODIFIED
+    function showConcernInput() {
+        const categories = ["idea", "wish", "concern", "top-priority", "demand", "opinion/comment"];
+        const jurisdictions = ["Local", "State", "Federal"]; // NEW JURISDICTION OPTIONS
+
+        let categoryOptionsHtml = categories.map(cat => {
+            let label = cat.charAt(0).toUpperCase() + cat.slice(1);
+            if (cat === 'opinion/comment') {
+                label = 'Opinion/Comment';
+            } else if (cat === 'top-priority') {
+                label = 'Top-Priority';
+            }
+            return `<option value="${cat}">${label}</option>`;
+        }).join('');
+        
+        // NEW JURISDICTION DROPDOWN HTML
+        let jurisdictionOptionsHtml = jurisdictions.map(level => {
+            return `<option value="${level.toUpperCase()}">${level}</option>`;
+        }).join('');
+
+
+        dialog.innerHTML = `
+            <div class="question">Categorize your intent and select the appropriate jurisdiction:</div>
+            
+            <label style="display:block; margin-top:10px;">**Intent Category:**</label>
+            <select id="category-dropdown" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                ${categoryOptionsHtml}
+            </select>
+            
+            <label style="display:block; margin-top:10px;">**Target Jurisdiction:**</label>
+            <select id="jurisdiction-dropdown" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                ${jurisdictionOptionsHtml}
+            </select>
+
+            <div class="question" style="margin-top:20px;">State your civic concern (up to 500 characters):</div>
+            <div class="char-count" id="charCount">0/500</div>
+            <textarea id="concern-text" maxlength="500" placeholder="Describe your concern or idea here..."></textarea>
+            <button onclick="handleConcernSubmit()">Save</button>
+            <button onclick="skipConcernSubmit()">Skip</button>
+        `;
+
+        const textarea = document.getElementById('concern-text');
+        const charCount = document.getElementById('charCount');
+        textarea.addEventListener('input', function() {
+            charCount.textContent = `${textarea.value.length}/500`;
+        });
+
+        window.handleConcernSubmit = () => {
+            const category = document.getElementById('category-dropdown').value;
+            // NEW: Get jurisdiction value
+            const jurisdiction = document.getElementById('jurisdiction-dropdown').value;
+            const text = document.getElementById('concern-text').value.trim();
+            
+            if (text) {
+                // *** UPDATED: Add jurisdictionLevel field to the intent object ***
+                userData.concerns.push({ 
+                    category: category, 
+                    text: text, 
+                    isSent: false,
+                    jurisdictionLevel: jurisdiction // Saves as LOCAL, STATE, or FEDERAL
+                });
+            }
+            saveData();
+            showSummary();
+        };
+        
+        window.skipConcernSubmit = () => {
+            showSummary(); 
+        };
+    }
+
+
+    function askForGPS() {
+        dialog.innerHTML = `
+            <div class="question">Would you like to use GPS to auto-detect your town and state?</div>
+            <button onclick="getGPSLocation()">Yes</button>
+            <button onclick="manualLocation()">No</button>
+        `;
+    }
+
+    function getGPSLocation() {
+        dialog.innerHTML = `<div class="question">Detecting your location...</div>`;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                // Use OpenStreetMap Nominatim API for reverse geocoding
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let town = data.address.town || data.address.city || data.address.village || '';
+                        let state = data.address.state || data.address.region || '';
+                        if (town && state) {
+                            userData.town = town;
+                            userData.state = state;
+                            saveData();
+                            dialog.innerHTML = `
+                                <div class="question">Your detected town is: <b>${town}</b><br>Your detected state is: <b>${state}</b><br>Is this correct?</div>
+                                <button onclick="confirmLocation(true)">Yes</button>
+                                <button onclick="confirmLocation(false)">No</button>
+                            `;
+                        } else {
+                            dialog.innerHTML = `<p>Could not determine town/state from GPS. Please enter manually.</p>`;
+                            manualLocation();
+                        }
+                    })
+                    .catch(() => {
+                        dialog.innerHTML = `<p>Reverse geocoding failed. Please enter your town and state manually.</p>`;
+                        manualLocation();
+                    });
+            }, function(error) {
+                dialog.innerHTML = `<p>Unable to access GPS. Please enter your town and state manually.</p>`;
+                manualLocation();
+            });
+        } else {
+            dialog.innerHTML = `<p>GPS not supported. Please enter your town and state manually.</p>`;
+            manualLocation();
+        }
+    }
+
+    function confirmLocation(isCorrect) {
+        if (isCorrect) {
+            saveData();
+            askMissingFields();
+        } else {
+            manualLocation();
+        }
+    }
+
+    function manualLocation() {
+        showQuestion('Enter your town and state (e.g., Putnam, CT):', 'text', (val) => {
+            if (val) {
+                const parts = val.split(',').map(s => s.trim());
+                const town = parts[0] || '';
+                const state = parts.length > 1 ? parts.slice(1).join(', ') : '';
+
+                if (town && state) {
+                    userData.town = town;
+                    userData.state = state;
+                    saveData();
+                    askMissingFields();
+                } else {
+                    dialog.innerHTML = `<p>We can’t proceed without verification of your town and state.</p>`;
+                }
+            } else {
+                dialog.innerHTML = `<p>We can’t proceed without verification of your town and state.</p>`;
+            }
+        });
+    }
+
+    function startDialog() {
+        // FIX: Scroll to top when returning to main dialog
+        window.scrollTo(0, 0); 
+        
+        const greetingName = userData.firstName ? userData.firstName : 'Anonymous';
+        const greeting = `Welcome back, ${greetingName}!`;
+        
+        let lastConcernText = 'None yet';
+        if (userData.concerns.length > 0) {
+            const lastConcern = userData.concerns.slice(-1)[0];
+            // Safe access of isSent due to migration logic
+            const status = lastConcern.isSent ? ' (Sent)' : ' (Un-sent)';
+            const jurisdiction = lastConcern.jurisdictionLevel || 'UNKNOWN';
+            lastConcernText = `[${jurisdiction} ${lastConcern.category ? lastConcern.category.toUpperCase() : ''}] ${lastConcern.text || 'Uncategorized concern'}${status}`;
+        }
+
+        dialog.innerHTML = `
+            <div class="question">${greeting}</div>
+            <p>Your verified location: ${userData.town || 'N/A'}, ${userData.state || 'N/A'}</p>
+            <p>Your Civic ID: <b>${userData.civicId}</b></p>
+            <p>Last intent: ${lastConcernText}</p>
+            <button onclick="askMissingFields()">Continue</button>
+        `;
+        if (!(userData.town && userData.state && userData.civicId)) {
+            askForGPS();
+        }
+    }
+
+    function askMissingFields() {
+        const fields = [
+            { key: 'firstName', label: 'Enter your first name (optional):' },
+            { key: 'lastName', label: 'Enter your last name (optional):' },
+            { key: 'email', label: 'Enter your email (optional, REQUIRED for submission):' },
+            { key: 'phone', label: 'Enter your phone number (optional, REQUIRED for submission):' },
+            { key: 'referral', label: 'Enter referral email (optional):' }
+        ];
+
+        const missing = fields.filter(f => !userData[f.key]);
+        if (missing.length === 0) {
+            saveData();
+            showConcernInput(); // Call the CATEGORIZED input function
+            return;
+        }
+
+        let index = 0;
+        function nextField() {
+            if (index >= missing.length) {
+                saveData();
+                showConcernInput(); // Call the CATEGORIZED input function
+                return;
+            }
+            const field = missing[index];
+            showQuestion(field.label, 'text', (val) => {
+                if (val) userData[field.key] = val;
+                saveData();
+                index++;
+                nextField();
+            });
+        }
+        nextField();
+    }
+
+    // FUNCTION: JSON File Download Submission (REPLACING mailto:)
+    function submitApplication() {
+        
+        // 1. FILTER: Get only NEW concerns (isSent: false)
+        const newConcerns = userData.concerns.filter(c => c.isSent === false);
+
+        if (newConcerns.length === 0) {
+            dialog.innerHTML = `<h2>No New Data</h2><p>You have already submitted all of your current Civic DNA. Add a new intent to submit an update.</p><button onclick="showSummary()">Return to Summary</button>`;
+            return;
+        }
+
+        // --- DYNAMIC CATEGORY TEXT GENERATION ---
+        let categoryText = 'NEW Civic DNA'; 
+        if (newConcerns.length > 0) {
+            const categories = [...new Set(newConcerns.map(c => c.category))];
+            
+            // Helper to format category for display in the message
+            const formatCategory = (c) => {
+                if (c === 'opinion/comment') return 'Opinion/Comment';
+                if (c === 'top-priority') return 'Top-Priority';
+                return c.charAt(0).toUpperCase() + c.slice(1);
+            };
+
+            if (categories.length === 1) {
+                // Single category: use UPPERCASE (e.g., IDEA)
+                categoryText = formatCategory(categories[0]).toUpperCase();
+            } else {
+                // Multiple categories: join them and append "Intents" (e.g., Idea, Wish, and Demand Intents)
+                const formattedCategories = categories.map(formatCategory);
+                categoryText = formattedCategories.join(', ') + ' Intents';
+            }
+        }
+        // --- END DYNAMIC CATEGORY TEXT GENERATION ---
+
+
+        // 2. Prepare payload: Only send core ID, location, and NEW concerns
+        // The newConcerns objects now correctly include the 'jurisdictionLevel' field
+        const payload = {
+            civicId: userData.civicId,
+            town: userData.town,
+            state: userData.state,
+            firstName: userData.firstName || undefined, // Include contact for verification
+            lastName: userData.lastName || undefined,
+            email: userData.email || undefined,
+            phone: userData.phone || undefined,
+            referral: userData.referral || undefined,
+            submissionDate: new Date().toISOString(), // Add timestamp
+            newConcerns: newConcerns
+        };
+        
+        // 3. Serialize Data
+        const applicationData = JSON.stringify(payload, null, 2); 
+        
+        // *** JSON DOWNLOAD LOGIC START (REPLACING mailto:) ***
+
+        // 4. Create a Blob from the JSON string
+        const blob = new Blob([applicationData], { type: 'application/json' });
+        
+        // 5. Create a temporary anchor element
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        // Clean up town name for filename and append short Civic ID for uniqueness
+        const cleanTown = userData.town.replace(/\s/g, '_');
+        a.download = `Civic_DNA_Update_${cleanTown}_${userData.civicId.substring(0, 8)}.json`;
+        
+        // 6. Programmatically click the link to trigger download
+        document.body.appendChild(a); 
+        a.click();
+        document.body.removeChild(a); // Clean up the element
+
+        // *** JSON DOWNLOAD LOGIC END ***
+
+
+        // 7. FLAG as SENT and Save (CRUCIAL STEP for Auditing)
+        userData.concerns.forEach(c => {
+            if (c.isSent === false) {
+                c.isSent = true;
+            }
+        });
+        saveData();
+
+        // 8. Final Confirmation - MODIFIED FOR FILE DOWNLOAD
+        dialog.innerHTML = `
+            <h2>Download Complete!</h2>
+            <p>Thank yourself, **${userData.firstName || 'Applicant'}**!</p>
+            <p>Your **${newConcerns.length} selected ${categoryText} item(s)** have been successfully saved to your PC as a **.json** file.</p>
+            <p>Please locate the file: **${a.download}** and submit it to the Local Delegation Council for processing.</p>
+            <button onclick="startDialog()">Return to Home</button>
+        `;
+    }
+
+    function showSummary() {
+        // FIX: Scroll to top when showing summary
+        window.scrollTo(0, 0); 
+        
+        let concernsList = '';
+        if (userData.concerns.length > 0) {
+            concernsList = '<ol>';
+            userData.concerns.forEach(c => {
+                const category = c.category ? c.category.toUpperCase() : 'UNCATEGORIZED';
+                const jurisdiction = c.jurisdictionLevel || 'UNKNOWN'; // Retrieve new field
+                const text = c.text || 'No text provided';
+                // Display SENT/UN-SENT status and color code
+                const status = c.isSent ? ' (SENT)' : ' (UN-SENT)';
+                const statusColor = c.isSent ? 'lightgray' : 'gold'; // Highlight UN-SENT items
+                
+                concernsList += `<li><span class="category-label" style="color:${statusColor}">[${jurisdiction} ${category}]</span>${text}${status}</li>`;
+            });
+            concernsList += '</ol>';
+        } else {
+            concernsList = '<p>(No concerns submitted yet. Please add intent before finalizing.)</p>';
+        }
+
+        // Determine button state and reason for ineligibility
+        const isEligible = checkSubmissionEligibility();
+        let submitButton = '';
+        
+        if (isEligible) {
+            submitButton = `<button class="submit-button" onclick="submitApplication()">Download NEW Civic DNA File</button>`;
+        } else {
+            const hasContact = userData.email || userData.phone; 
+            const hasNewConcerns = userData.concerns.some(c => c.isSent === false);
+            
+            let reason = [];
+            if (!hasContact) reason.push('Contact (Email/Phone)');
+            if (!hasNewConcerns) reason.push('New Intents to Submit');
+            
+            submitButton = `<p style="color:red; font-weight:bold;">Submission Blocked: Missing ${reason.join(' and ')}.</p>`;
+        }
+
+        dialog.innerHTML = `
+            <p><strong>Review and Edit Your Details:</strong></p>
+            <div class="summary">
+                <label>Civic ID: ${userData.civicId}</label><br>
+                <label>Location: ${userData.town}, ${userData.state}</label><br>
+                <input id="firstName" placeholder="First Name" value="${userData.firstName}">
+                <input id="lastName" placeholder="Last Name" value="${userData.lastName}">
+                <input id="email" placeholder="Email (Required)" value="${userData.email}">
+                <input id="phone" placeholder="Phone (Required)" value="${userData.phone}">
+                <input id="referral" placeholder="Referral Email" value="${userData.referral}">
+            </div>
+            <p><strong>Civic DNA (Intent) History:</strong></p>
+            ${concernsList}
+            <button onclick="saveEdits()">Save Changes</button>
+            <button onclick="showConcernInput()">Add New Intent</button>
+            <button onclick="startDialog()">Start Over</button>
+            <hr style="border-top: 1px solid gold; margin: 20px 0;">
+            ${submitButton}
+        `;
+    }
+
+    function saveEdits() {
+        userData.firstName = document.getElementById('firstName').value.trim();
+        userData.lastName = document.getElementById('lastName').value.trim();
+        userData.email = document.getElementById('email').value.trim();
+        userData.phone = document.getElementById('phone').value.trim();
+        userData.referral = document.getElementById('referral').value.trim();
+        saveData();
+        // Return to showSummary to see updated details and submission button status
+        dialog.innerHTML = `<p>Changes saved successfully!</p><button onclick="showSummary()">Return to Summary</button>`;
+    }
+
+    // --- JAVASCRIPT FUNCTIONS FOR NARRATIVE VIEW ---
+
+    function showNarrative(narrativeId) {
+        // Scroll to the top of the page when a new narrative is displayed
+        window.scrollTo(0, 0); 
+        
+        document.getElementById('top-anchor').style.display = 'none';
+        document.getElementById('detail-section').style.display = 'block';
+
+        const narrativeContents = document.querySelectorAll('#narrative-content > div');
+        narrativeContents.forEach(div => {
+            div.style.display = 'none';
+        });
+
+        document.getElementById(narrativeId).style.display = 'block';
+    }
+
+    function hideNarrative() {
+        // Scroll to the top when returning to the dialog
+        window.scrollTo(0, 0); 
+        
+        document.getElementById('detail-section').style.display = 'none';
+        document.getElementById('top-anchor').style.display = 'flex'; 
+    }
+
+    startDialog();
+</script>
+</body>
+</html>
