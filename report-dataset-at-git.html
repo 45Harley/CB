@@ -1,0 +1,35 @@
+import pandas as pd
+import os
+import sys
+
+# --- CONFIGURATION (Hard-coded for the mock data files) ---
+# The script assumes both files are in the same directory.
+INPUT_FILE = 'mock_master_data_1000.jsonl'
+OUTPUT_FILE = 'mock_master_data_1000.csv'
+
+# --- MAIN EXECUTION ---
+if __name__ == "__main__":
+    
+    print(f"--- Starting conversion: {INPUT_FILE} to CSV ---")
+
+    if not os.path.exists(INPUT_FILE):
+        print(f"\n❌ ERROR: Input file not found: {INPUT_FILE}")
+        print("Please ensure the JSONL file is in the same directory as this script.")
+        # Exit the script with a non-zero code to fail a GitHub Action build
+        sys.exit(1)
+    
+    try:
+        # Load the JSONL file directly into a pandas DataFrame.
+        df = pd.read_json(INPUT_FILE, lines=True)
+
+        # Export the DataFrame to a CSV file.
+        df.to_csv(OUTPUT_FILE, index=False, encoding='utf-8')
+
+        print(f"\n✅ SUCCESS! Converted {len(df)} records.")
+        print(f"Output file created: {os.path.abspath(OUTPUT_FILE)}")
+
+    except Exception as e:
+        print(f"\n❌ CRITICAL ERROR: Conversion failed!")
+        print(f"Error details: {e}")
+        print("Please check file integrity and pandas installation.")
+        sys.exit(1)
