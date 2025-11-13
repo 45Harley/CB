@@ -431,12 +431,27 @@
     // Helper function to check if the minimum required data for submission is present
     function checkSubmissionEligibility() {
         const hasLocation = userData.town && userData.state;
-        // Requires at least one contact method: email OR phone
-        const hasContact = userData.email || userData.phone; 
+        // The check for contact (email/phone) is intentionally removed to allow Anonymous submissions.
+        // const hasContact = userData.email || userData.phone; 
         // Must have at least one UN-SENT concern to submit an update
         const hasNewConcerns = userData.concerns.some(c => c.isSent === false);
-        return hasLocation && hasContact && hasNewConcerns;
+        // Now only requires location and new concerns to be eligible
+        return hasLocation && hasNewConcerns;
     }
+    
+    // **NEW FUNCTION:** Clear all concerns that have been sent (isSent: true)
+    function clearSentConcerns() {
+        // Filter the array to keep only UN-SENT items
+        const originalLength = userData.concerns.length;
+        userData.concerns = userData.concerns.filter(c => c.isSent === false);
+        saveData();
+        const newLength = userData.concerns.length;
+        const clearedCount = originalLength - newLength;
+        
+        // Provide feedback to the user and refresh the summary
+        dialog.innerHTML = `<p>${clearedCount} sent concern(s) cleared. Remaining active concerns: ${newLength}.</p><button onclick="showSummary()">Return to Summary</button>`;
+    }
+
 
     function showQuestion(text, inputType = 'text', callback) {
         dialog.innerHTML = `
@@ -796,11 +811,13 @@
         if (isEligible) {
             submitButton = `<button class="submit-button" onclick="submitApplication()">Download NEW Civic DNA File</button>`;
         } else {
-            const hasContact = userData.email || userData.phone; 
+            // Recalculating eligibility components for the blocked message based on new rules
+            const hasLocation = userData.town && userData.state;
             const hasNewConcerns = userData.concerns.some(c => c.isSent === false);
             
             let reason = [];
-            if (!hasContact) reason.push('Contact (Email/Phone)');
+            // Contact is no longer a block
+            if (!hasLocation) reason.push('Verified Location');
             if (!hasNewConcerns) reason.push('New Intents to Submit');
             
             submitButton = `<p style="color:red; font-weight:bold;">Submission Blocked: Missing ${reason.join(' and ')}.</p>`;
@@ -813,8 +830,8 @@
                 <label>Location: ${userData.town}, ${userData.state}</label><br>
                 <input id="firstName" placeholder="First Name" value="${userData.firstName}">
                 <input id="lastName" placeholder="Last Name" value="${userData.lastName}">
-                <input id="email" placeholder="Email (Required)" value="${userData.email}">
-                <input id="phone" placeholder="Phone (Required)" value="${userData.phone}">
+                <input id="email" placeholder="Email (Optional)" value="${userData.email}">
+                <input id="phone" placeholder="Phone (Optional)" value="${userData.phone}">
                 <input id="referral" placeholder="Referral Email" value="${userData.referral}">
             </div>
             <p><strong>Civic DNA (Intent) History:</strong></p>
@@ -822,6 +839,7 @@
             <button onclick="saveEdits()">Save Changes</button>
             <button onclick="showConcernInput()">Add New Intent</button>
             <button onclick="startDialog()">Start Over</button>
+            <button onclick="clearSentConcerns()">Clear All Sent Concerns</button>
             <hr style="border-top: 1px solid gold; margin: 20px 0;">
             ${submitButton}
         `;
